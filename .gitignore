@@ -1,0 +1,5 @@
+backend/.env
+backend/vendor
+backend/tmp/db
+frontend/.vscode
+frontend/node_modules
