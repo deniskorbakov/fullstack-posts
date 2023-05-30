@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostCategory>
  */
-class PostFactory extends Factory
+class PostCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,8 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => rand(1,5),
-            'body' => fake()->text(),
-            'description' => fake()->name(),
+            'user_id' => rand(1, 5),
+            'post_id' => rand(1, 30),
         ];
     }
 }
