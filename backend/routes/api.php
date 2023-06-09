@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 //public routes
