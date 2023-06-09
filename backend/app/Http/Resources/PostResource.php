@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Category;
+
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
