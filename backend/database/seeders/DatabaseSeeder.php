@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
-use App\Models\PostCategory;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +22,5 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         Comment::factory(20)->create();
         Like::factory(100)->create();
-        PostCategory::factory(60)->create();
     }
 }
