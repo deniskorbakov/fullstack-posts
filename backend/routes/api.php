@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\Api\V1\CommentResponseController;
 use Illuminate\Support\Facades\Route;
 
 //public routes
@@ -27,6 +28,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/post/{post}/like', [LikeController::class, 'add']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/comment/{comment}/response', [CommentResponseController::class, 'store']);
+    Route::put('/comment/{comment}/response/{response}', [CommentResponseController::class, 'update']);
+    Route::delete('/comment/{comment}/response/{response}', [CommentResponseController::class, 'destroy']);
 });
 
 
