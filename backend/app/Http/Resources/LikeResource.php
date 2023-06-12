@@ -16,6 +16,7 @@ class LikeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'userName' => User::all()->where('id', $this->user_id)->value('name'),
         ];
     }
