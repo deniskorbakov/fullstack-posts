@@ -6,6 +6,10 @@ use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\CommentResponseController;
+use App\Http\Middleware\CheckCommentOwner;
+use App\Http\Middleware\CheckCommentResponseOwner;
+use App\Http\Middleware\CheckLikeOwner;
+use App\Http\Middleware\CheckPostOwner;
 use Illuminate\Support\Facades\Route;
 
 //public routes
@@ -13,28 +17,28 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/posts', [PostController::class, 'index']);
-Route::get('/post/{post}', [PostController::class, 'show']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
 
 Route::get('/categories', [CategoryController::class, 'all']);
 
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/post', [PostController::class, 'store']);
-    Route::put('/post/{post}', [PostController::class, 'update']);
-    Route::delete('/post/{post}', [PostController::class, 'destroy']);
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware(CheckPostOwner::class);
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware(CheckPostOwner::class);
 
-    Route::post('/post/{post}/comment', [CommentController::class, 'store']);
-    Route::put('/post/{post}/comment/{comment}', [CommentController::class, 'update']);
-    Route::delete('/post/{post}/comment/{comment}', [CommentController::class, 'destroy']);
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+    Route::put('/posts/{post}/comments/{comment}', [CommentController::class, 'update'])->middleware(CheckCommentOwner::class);
+    Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->middleware(CheckCommentOwner::class);
 
-    Route::post('/post/{post}/like', [LikeController::class, 'stor']);
-    Route::delete('/post/{post}/like/{like}', [LikeController::class, 'destroy']);
+    Route::post('/post/{post}/likes', [LikeController::class, 'store']);
+    Route::delete('/posts/{post}/likes/{like}', [LikeController::class, 'destroy'])->middleware(CheckLikeOwner::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::post('/comment/{comment}/response', [CommentResponseController::class, 'store']);
-    Route::put('/comment/{comment}/response/{response}', [CommentResponseController::class, 'update']);
-    Route::delete('/comment/{comment}/response/{response}', [CommentResponseController::class, 'destroy']);
+    Route::post('/comments/{comment}/responses', [CommentResponseController::class, 'store']);
+    Route::put('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'update'])->middleware(CheckCommentResponseOwner::class);
+    Route::delete('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'destroy'])->middleware(CheckCommentResponseOwner::class);
 });
 
 
