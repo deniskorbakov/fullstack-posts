@@ -27,19 +27,13 @@ class CommentController extends Controller
     }
 
     public function update(Post $post, Comment $comment, CommentRequest $request) {
-        if (auth()->user()->getAuthIdentifier() == $comment->user_id && $post->id == $comment->post_id) {
-            $fields = $request->validated();
+        $fields = $request->validated();
 
-            $comment->update([
-                'text' => $fields['text'],
-            ]);
+        $comment->update([
+            'text' => $fields['text'],
+        ]);
 
-            return new CommentResource($comment);
-        } else {
-            return response([
-                'message' => 'you cannot update this comment',
-            ], 403);
-        }
+        return new CommentResource($comment);
     }
 
     public function destroy(Post $post, Comment $comment) {
