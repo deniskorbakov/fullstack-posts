@@ -19,28 +19,20 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $page = ($request->page ?? 1) * 10;
+
         $skip = $page - 10;
+
         return PostResource::collection(Post::orderBy('id', 'desc')->skip($skip)->paginate(10));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, PostService $service)
     {
         $fields = $request->validated();
 
-        $post = Post::create([
-            'user_id' => auth()->user()->getAuthIdentifier(),
-            'body' => $fields['body'],
-            'description' => $fields['description'],
-        ]);
-
-        $categories = Category::whereIn('id', $fields['categories'])->get();
-
-        foreach ($categories as $category) {
-            $category->posts()->save($post);
-        }
+        $post = $service->store($fields);
 
         return new PostResource($post);
     }
@@ -60,15 +52,7 @@ class PostController extends Controller
     {
         $fields = $request->validated();
 
-        $categories = Category::whereIn('id', $fields['categories'])->get();
-
-        $post->update([
-            'body' => $fields['body'],
-            'description' => $fields['description'],
-        ]);
-
-
-        $post->categories()->sync($categories);
+        $post = $service->update($fields, $post);
 
         return new PostResource($post);
     }
