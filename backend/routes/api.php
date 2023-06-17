@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/posts/{post}/comments/{comment}', [CommentController::class, 'update'])->middleware(CheckCommentOwner::class);
     Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->middleware(CheckCommentOwner::class);
 
-    Route::post('/post/{post}/likes', [LikeController::class, 'store']);
+    Route::post('/posts/{post}/likes', [LikeController::class, 'store']);
     Route::delete('/posts/{post}/likes/{like}', [LikeController::class, 'destroy'])->middleware(CheckLikeOwner::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
