@@ -17,7 +17,7 @@ class LikeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'userName' => User::all()->where('id', $this->user_id)->value('name'),
+            'userName' => User::where('id', $this->user_id)->value('name'),
         ];
     }
 }

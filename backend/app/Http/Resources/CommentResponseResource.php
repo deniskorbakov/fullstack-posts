@@ -18,7 +18,7 @@ class CommentResponseResource extends JsonResource
         return [
             'id' => $this->id,
             'text' => $this->text,
-            'userName' => User::all()->where('id', $this->user_id)->value('name'),
+            'userName' => User::where('id', $this->user_id)->value('name'),
         ];
     }
 }

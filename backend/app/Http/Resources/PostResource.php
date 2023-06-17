@@ -29,11 +29,11 @@ class PostResource extends JsonResource
             'id' => $this->post->id,
             'body' => $this->post->body,
             'description' => $this->post->description,
-            'userName' => User::all()->where('id', $this->post->user_id)->value('name'),
+            'userName' => User::where('id', $this->post->user_id)->value('name'),
             'categories' => CategoryResource::collection($this->post->categories),
-            'likes' => LikeResource::collection(Like::all()->where('post_id', $this->post->id)),
-            'likesCount' => Like::all()->where('post_id', $this->id)->count(),
-            'comments' => CommentResource::collection(Comment::all()->where('post_id', $this->post->id)),
+            'likes' => LikeResource::collection(Like::where('post_id', $this->post->id)->get()),
+            'likesCount' => Like::where('post_id', $this->post->id)->count(),
+            'comments' => CommentResource::collection(Comment::where('post_id', $this->post->id)->get()),
         ];
     }
 }
