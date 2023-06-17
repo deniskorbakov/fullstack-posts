@@ -37,14 +37,8 @@ class CommentController extends Controller
     }
 
     public function destroy(Post $post, Comment $comment) {
-        if (auth()->user()->getAuthIdentifier() == $comment->user_id && $post->id == $comment->post_id) {
-            $comment->delete();
+        $comment->delete();
 
-            return response(null, ResponseAlias::HTTP_NO_CONTENT);
-        } else {
-            return response([
-                'message' => 'you cannot delete this comment',
-            ], 403);
-        }
+        return response(null, ResponseAlias::HTTP_NO_CONTENT);
     }
 }
