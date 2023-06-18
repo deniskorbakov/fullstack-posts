@@ -6,48 +6,23 @@ use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(AuthRequest $request) {
+    public function register(AuthRequest $request, AuthService $service) {
         $fields = $request->validated();
 
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-        ]);
-
-        $token = $user->createToken('myAppToken')->plainTextToken;
-
-        $response = [
-            'user' => new UserResource($user),
-            'token' => $token,
-        ];
+        $response = $service->register($fields);
 
         return response($response, 201);
     }
 
-    public function login(AuthLoginRequest $request) {
+    public function login(AuthLoginRequest $request, AuthService $service) {
         $fields = $request->validated();
 
-        //check email
-        $user = User::where('email', $fields['email'])->first();
-
-        //check password
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Bad creds',
-            ], 401);
-        }
-
-        $token = $user->createToken('myAppToken')->plainTextToken;
-
-        $response = [
-            'user' => new UserResource($user),
-            'token' => $token,
-        ];
+        $response = $service->login($fields);
 
         return response($response, 200);
     }

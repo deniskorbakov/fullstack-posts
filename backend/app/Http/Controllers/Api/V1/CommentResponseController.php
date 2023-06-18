@@ -23,31 +23,20 @@ class CommentResponseController extends Controller
     }
 
     public function update(Comment $comment, CommentResponse $response, CommentResponseRequest $request) {
-        if (auth()->user()->getAuthIdentifier() == $response->user_id && $response->comment_id == $comment->id) {
-            $fields = $request->validated();
+        $fields = $request->validated();
 
-            $response->update([
-                'text' => $fields['text'],
-            ]);
+        $response->update([
+            'text' => $fields['text'],
+        ]);
 
-            return new CommentResponseResource($response);
-        } else {
-            return response([
-                'message' => 'you cannot update this comment',
-            ], 403);
-        }
+        return new CommentResponseResource($response);
     }
 
     public function destroy(Comment $comment, CommentResponse $response) {
-        if (auth()->user()->getAuthIdentifier() == $response->user_id && $response->comment_id == $comment->id) {
-            $response->delete();
 
-            return response(null, ResponseAlias::HTTP_NO_CONTENT);
-        }
-        else {
-            return response([
-                'message' => 'you cannot delete this comment',
-            ], 403);
-        }
+        $response->delete();
+
+        return response(null, ResponseAlias::HTTP_NO_CONTENT);
+
     }
 }

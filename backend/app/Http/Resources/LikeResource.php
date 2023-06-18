@@ -2,12 +2,19 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Like;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LikeResource extends JsonResource
 {
+    public function __construct(private Like $like)
+    {
+        parent::__construct($like);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -16,8 +23,8 @@ class LikeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'userName' => User::all()->where('id', $this->user_id)->value('name'),
+            'id' => $this->like->id,
+            'userName' => $this->like->users()->value('name'),
         ];
     }
 }
