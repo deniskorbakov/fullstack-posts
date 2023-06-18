@@ -2,13 +2,20 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Comment;
 use App\Models\CommentResponse;
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentResource extends JsonResource
 {
+    public function __construct(private Comment $comment)
+    {
+        parent::__construct($this->comment);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -17,10 +24,10 @@ class CommentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'userName' => User::where('id', $this->user_id)->value('name'),
-            'comment' => $this->text,
-            'responses' => CommentResponseResource::collection(CommentResponse::where('comment_id', $this->id)->get()),
+            'id' => $this->comment->id,
+            'userName' => $this->comment->users()->value('name'),
+            'comment' => $this->comment->text,
+            'responses' => CommentResponseResource::collection($this->comment->responses()->get()),
         ];
     }
 }
