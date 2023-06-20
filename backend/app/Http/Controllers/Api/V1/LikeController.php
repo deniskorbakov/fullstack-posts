@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class LikeController extends Controller
 {
     public function store(Post $post, LikeService $service) {
-        $like = $service->store($post);
+        $response = $service->store($post);
 
-        return new LikeResource($like);
+        return response($response->original, $response->status());
     }
 
     public function destroy(Post $post, Like $like) {
