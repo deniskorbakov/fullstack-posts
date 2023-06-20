@@ -16,7 +16,7 @@ class AuthController extends Controller
 
         $response = $service->register($fields);
 
-        return response($response, 201);
+        return response(['data' => $response->original], $response->status());
     }
 
     public function login(AuthLoginRequest $request, AuthService $service) {
@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $response = $service->login($fields);
 
-        return response($response, 200);
+        return response(['data' => $response->original], $response->status());
     }
 
     public function logout() {
@@ -34,6 +34,6 @@ class AuthController extends Controller
           'message' => 'you logout',
         ];
 
-        return response($response, 200);
+        return response(['data' => $response], 200);
     }
 }
