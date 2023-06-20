@@ -2,11 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Resources\LikeResource;
 use App\Http\Resources\UserResource;
-use App\Models\Category;
-use App\Models\Like;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,19 +14,18 @@ class AuthService
 
         //check password
         if(!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Bad creds',
-            ], 401);
+            return response(['message' => 'bad creds'], 403);
         }
+        else {
+            $token = $user->createToken('myAppToken')->plainTextToken;
 
-        $token = $user->createToken('myAppToken')->plainTextToken;
+            $response = [
+                'user' => new UserResource($user),
+                'token' => $token,
+            ];
 
-        $response = [
-            'user' => new UserResource($user),
-            'token' => $token,
-        ];
-
-        return $response;
+            return response($response, 200);
+        }
     }
 
     public function register($fields) {
@@ -47,6 +42,6 @@ class AuthService
             'token' => $token,
         ];
 
-        return $response;
+        return response($response, 201);
     }
 }
