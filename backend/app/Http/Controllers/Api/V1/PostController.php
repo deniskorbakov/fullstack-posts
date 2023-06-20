@@ -22,7 +22,7 @@ class PostController extends Controller
 
         $skip = $page - 10;
 
-        return PostResource::collection(Post::orderBy('id', 'desc')->skip($skip)->paginate(10));
+        return PostResource::collection(Post::orderBy('id', 'desc')->skip($skip)->simplePaginate(10));
     }
 
     /**
