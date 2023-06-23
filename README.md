@@ -15,10 +15,8 @@ ___
 ### front:
 
 * в папке infra прописать ``docker logs front``
-* перейти по второму адресу - откроется прокет на vue js
+* перейти по Network - откроется прокет на vue js
 
 ___
 
-### Swagger - [перейти](http://localhost:8876/api/documentation)
-
-### Laravel Telescope - [перейти](http://localhost:8876/telescope/requests)
+### Swagger - [перейти](http://localhost:8876/api/doc)
