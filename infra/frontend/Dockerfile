@@ -1,15 +1,21 @@
-FROM node:lts-alpine
-
-RUN npm install -g http-server
+FROM node:20.2.0
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm install
+RUN apt-get update
+RUN npm install -g npm@9.7.2
+RUN npm install yarn
+
 
 COPY . .
 
-RUN npm run build
+RUN chown -R node:node /app
+
+
+USER node
+
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD ["yarn"]
+CMD ["yarn", "dev", "--host"]

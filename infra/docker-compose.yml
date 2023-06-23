@@ -28,8 +28,11 @@ services:
         build:
             context: ../frontend
             dockerfile: ../infra/frontend/Dockerfile
+
+        user: '1000:1000'
+
         volumes:
-            - ../frontend:/usr/src/app
+            - ../frontend:/app
         restart: always
         ports:
             - "88:8080"
