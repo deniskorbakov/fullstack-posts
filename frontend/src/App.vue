@@ -1,10 +1,21 @@
 <script setup>
 
+import {ref} from "vue";
+import Header from "./components/Header.vue";
+import Main from "./components/Main/Main.vue";
+
+const showSideBar = ref(true)
+
+function getSideBar() {
+  showSideBar.value = !showSideBar.value;
+}
 </script>
+
 
 <template>
   <div id="app">
-    <p class="text-3xl font-bold underline text-sky-300">asdasdasd111112212221211</p>
+    <Header :show="showSideBar" :toggle="getSideBar"></Header>
+    <Main :show="showSideBar"></Main>
   </div>
 </template>
 
