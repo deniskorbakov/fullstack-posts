@@ -13,17 +13,19 @@
 </script>
 
 <template>
-  <header class="bg-cyan-800 flex h-16 text-white p-4">
+  <header class="bg-sky-800 flex h-16 text-white p-4">
     <div class="flex-initial w-1/4">
       <button class="flex space-x-4" @click="props.toggle">
-        <i v-if="props.show" class="fa-solid fa-bars text-2xl"></i>
-        <i v-else class="fa-solid fa-bars-staggered text-2xl"></i>
+        <i v-if="props.show" class="fa-solid fa-bars-staggered text-2xl"></i>
+        <i v-else class="fa-solid fa-bars text-2xl"></i>
       </button>
 
     </div>
 
     <div class="flex-initial w-1/2">
-      <p class="text-2xl uppercase">Your Posts</p>
+      <button>
+        <router-link to="/" class="text-2xl uppercase">Your Posts</router-link>
+      </button>
     </div>
 
     <div class="flex-initial w-full space-x-20">
@@ -41,7 +43,7 @@
     <div class="flex-initial w-1/8 p-2">
       <button class="flex space-x-4">
         <i class="fa-solid fa-circle-user text-2xl"></i>
-        <p>войти</p>
+        <router-link to="/registration">Войти</router-link>
       </button>
     </div>
   </header>

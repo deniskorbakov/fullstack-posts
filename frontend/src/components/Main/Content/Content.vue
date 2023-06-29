@@ -3,8 +3,6 @@
 </script>
 
 <template>
-  <div class="bg-gray-900 w-full text-black">
-    <div class="w-2/5 h-screen mx-auto overflow-auto">
       <div class="container bg-white h-max mt-10 rounded-lg p-5">
         <div class="flex h-10 p-2 text-center">
           <div class="flex-initial w-1/6">
@@ -107,9 +105,6 @@
           </div>
         </div>
       </div>
-
-    </div>
-  </div>
 </template>
 
 <style scoped>

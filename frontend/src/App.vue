@@ -1,8 +1,8 @@
 <script setup>
 
 import {ref} from "vue";
-import Header from "./components/Header.vue";
-import Main from "./components/Main/Main.vue";
+import Header from "./components/Header/Header.vue";
+import SideBar from "./components/Main/SideBar/SideBar.vue";
 
 const showSideBar = ref(true)
 
@@ -15,7 +15,15 @@ function getSideBar() {
 <template>
   <div id="app">
     <Header :show="showSideBar" :toggle="getSideBar"></Header>
-    <Main :show="showSideBar"></Main>
+
+    <div id="main" class="flex bg-gray-800 text-white h-screen">
+      <SideBar v-show="showSideBar"></SideBar>
+      <div class="bg-gray-900 w-full text-black">
+        <div class="w-1/2 h-screen mx-auto overflow-auto">
+          <router-view/>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
