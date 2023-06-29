@@ -2,9 +2,9 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import {createRouter, createWebHistory} from "vue-router";
-import Content from "./components/Main/Content.vue";
-import Registration from "./components/Main/Registration.vue";
-import Auth from "./components/Main/Auth.vue";
+import Content from "./components/Main/Content/Content.vue";
+import Registration from "./components/Main/Registration/Registration.vue";
+import Auth from "./components/Main/Auth/Auth.vue";
 
 const router = createRouter({
     routes: [
