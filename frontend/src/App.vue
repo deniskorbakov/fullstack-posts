@@ -4,7 +4,7 @@ import {ref} from "vue";
 import Header from "./components/Header/Header.vue";
 import SideBar from "./components/Main/SideBar/SideBar.vue";
 
-const showSideBar = ref(true)
+const showSideBar = ref(false)
 
 function getSideBar() {
   showSideBar.value = !showSideBar.value;
@@ -27,6 +27,12 @@ function getSideBar() {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
+h2 {
+  @apply text-2xl
+}
 
+h3 {
+  @apply text-xl
+}
 </style>
