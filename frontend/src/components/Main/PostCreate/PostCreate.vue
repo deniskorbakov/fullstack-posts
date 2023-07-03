@@ -1,6 +1,6 @@
 <script setup>
 
-import TipTap from "../../TipTape/TipTap.vue";
+import TipTap from "../../EditorJs/EditorJs.vue";
 </script>
 
 <template>
