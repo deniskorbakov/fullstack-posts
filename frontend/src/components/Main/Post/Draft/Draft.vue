@@ -1,13 +1,15 @@
 <script setup>
-  defineProps({
+  const props = defineProps({
     title: {
       type: String,
       required: true,
+      default: 'Название поста'
     },
 
     body: {
       type: Object,
       required: true,
+      default: () => {}
     }
   })
 </script>
@@ -31,10 +33,10 @@
     </div>
 
     <div class="text-left mt-10">
-      <p class="text-3xl">{{title}}</p>
+      <p class="text-3xl">{{props.title}}</p>
     </div>
 
-    <div class="text-left mt-2 text-ellipsis whitespace-normal space-y-5" v-for="block in body.value.blocks" :key="body.value.time">
+    <div class="text-left mt-2 text-ellipsis whitespace-normal space-y-5" v-for="block in props.body.value.blocks" :key="props.body.value.time">
       <div v-if="block.type === 'paragraph'">
          <div v-html="block.data.text"></div>
       </div>
