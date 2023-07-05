@@ -27,12 +27,11 @@ class PostResource extends JsonResource
     {
         return [
             'id' => $this->post->id,
+            'title' => $this->post->title,
             'body' => $this->post->body,
-            'description' => $this->post->description,
             'userName' => $this->post->user()->value('name'),
             'categories' => CategoryResource::collection($this->post->categories),
             'likes' => LikeResource::collection($this->post->likes()->get()),
-            'likesCount' => $this->post->likes()->count(),
             'comments' => CommentResource::collection($this->post->comments()->get()),
         ];
     }
