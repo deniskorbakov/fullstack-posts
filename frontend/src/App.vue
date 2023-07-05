@@ -1,26 +1,24 @@
 <script setup>
-
-import {ref} from "vue";
 import Header from "./components/Header/Header.vue";
 import SideBar from "./components/Main/SideBar/SideBar.vue";
+import {useSidebarStore} from "./stores/sidebarStore.js";
+import {storeToRefs} from "pinia";
 
-const showSideBar = ref(false)
+const store = useSidebarStore()
 
-function getSideBar() {
-  showSideBar.value = !showSideBar.value;
-}
+const {getSidebar} = store
+const {show} = storeToRefs(store)
 </script>
 
 
 <template>
   <div id="app">
-    <Header :show="showSideBar" :toggle="getSideBar"></Header>
-
+    <Header :show="show" :toggle="getSidebar"></Header>
     <div id="main" class="flex bg-gray-800 text-white h-screen">
-      <SideBar v-show="showSideBar"></SideBar>
+      <SideBar v-show="show"></SideBar>
       <div class="bg-gray-900 w-full text-black">
         <div class="w-1/2 h-screen mx-auto overflow-auto">
-          <router-view/>
+          <RouterView/>
         </div>
       </div>
     </div>
