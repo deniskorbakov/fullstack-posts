@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\CommentResponseController;
+use App\Http\Controllers\Api\V1\UserAccountController;
 use App\Http\Middleware\CheckCommentOwner;
 use App\Http\Middleware\CheckCommentResponseOwner;
 use App\Http\Middleware\CheckLikeOwner;
@@ -23,6 +24,8 @@ Route::get('/categories', [CategoryController::class, 'all']);
 
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user', [UserAccountController::class, 'index']);
+
     Route::post('/posts', [PostController::class, 'store']);
     Route::put('/posts/{post}', [PostController::class, 'update'])->middleware(CheckPostOwner::class);
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware(CheckPostOwner::class);
