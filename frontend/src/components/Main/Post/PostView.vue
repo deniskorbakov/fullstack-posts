@@ -40,15 +40,11 @@ const props = defineProps({
     </div>
 
     <div class="flex h-10 p-2 mt-5">
-      <div class="flex-initial flex w-1/6 space-x-4">
+      <div class="flex-initial flex w-1/2 space-x-4">
         <i class="fa-regular fa-heart text-2xl"></i>
         <p>{{props.data['likes'].length}}</p>
       </div>
 
-      <div class="flex-initial flex w-1/2 space-x-4">
-        <i class="fa-regular fa-comment text-2xl"></i>
-        <p>{{props.data['comments'].length}}</p>
-      </div>
 
       <div class="flex-initial flex w-1/2 space-x-4">
         <i class="fa-regular fa-bookmark text-2xl"></i>
