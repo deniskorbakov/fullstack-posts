@@ -30,11 +30,9 @@ use App\Http\Controllers\Api\V1\Controller;
  *        @OA\JsonContent(
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="user", type="object",
- *                    @OA\Property(property="name", type="string", example="username"),
- *                    @OA\Property(property="email", type="string", example="test@gmail.com"),
- *                    @OA\Property(property="createAccount", type="string", example="2023-06-19 12:54:02"),
+ *                     @OA\Property(property="token", type="string", example="69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"),
  *                ),
- *                @OA\Property(property="token", type="string", example="69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"),
+ *
  *            ),
  *        ),
  *    ),
@@ -62,11 +60,8 @@ use App\Http\Controllers\Api\V1\Controller;
  *        @OA\JsonContent(
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="user", type="object",
- *                    @OA\Property(property="name", type="string", example="username"),
- *                    @OA\Property(property="email", type="string", example="test@gmail.com"),
- *                    @OA\Property(property="createAccount", type="string", example="2023-06-19 12:54:02"),
+ *                     @OA\Property(property="token", type="string", example="69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"),
  *                ),
- *                @OA\Property(property="token", type="string", example="69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"),
  *            ),
  *        ),
  *    ),
