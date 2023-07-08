@@ -20,7 +20,6 @@ class AuthService
             $token = $user->createToken('myAppToken')->plainTextToken;
 
             $response = [
-                'user' => new UserResource($user),
                 'token' => $token,
             ];
 
@@ -38,7 +37,6 @@ class AuthService
         $token = $user->createToken('myAppToken')->plainTextToken;
 
         $response = [
-            'user' => new UserResource($user),
             'token' => $token,
         ];
 
