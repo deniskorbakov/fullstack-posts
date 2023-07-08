@@ -54,24 +54,12 @@
                                             "properties": {
                                                 "user": {
                                                     "properties": {
-                                                        "name": {
+                                                        "token": {
                                                             "type": "string",
-                                                            "example": "username"
-                                                        },
-                                                        "email": {
-                                                            "type": "string",
-                                                            "example": "test@gmail.com"
-                                                        },
-                                                        "createAccount": {
-                                                            "type": "string",
-                                                            "example": "2023-06-19 12:54:02"
+                                                            "example": "69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"
                                                         }
                                                     },
                                                     "type": "object"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"
                                                 }
                                             },
                                             "type": "object"
@@ -125,24 +113,12 @@
                                             "properties": {
                                                 "user": {
                                                     "properties": {
-                                                        "name": {
+                                                        "token": {
                                                             "type": "string",
-                                                            "example": "username"
-                                                        },
-                                                        "email": {
-                                                            "type": "string",
-                                                            "example": "test@gmail.com"
-                                                        },
-                                                        "createAccount": {
-                                                            "type": "string",
-                                                            "example": "2023-06-19 12:54:02"
+                                                            "example": "69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"
                                                         }
                                                     },
                                                     "type": "object"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "69|ZT8PCvW7KAozKlHHUj4m089wZtwcJXXiPEvRpywI"
                                                 }
                                             },
                                             "type": "object"
@@ -721,9 +697,9 @@
                                                         "type": "string",
                                                         "example": "this is body for post"
                                                     },
-                                                    "description": {
+                                                    "title": {
                                                         "type": "string",
-                                                        "example": "this is description for post"
+                                                        "example": "this is title for post"
                                                     },
                                                     "userName": {
                                                         "type": "string",
@@ -755,10 +731,6 @@
                                                             },
                                                             "type": "object"
                                                         }
-                                                    },
-                                                    "likesCount": {
-                                                        "type": "integer",
-                                                        "example": 5
                                                     },
                                                     "comments": {
                                                         "type": "array",
@@ -828,9 +800,9 @@
                                                 "type": "string",
                                                 "example": "this is body for post"
                                             },
-                                            "description": {
+                                            "title": {
                                                 "type": "string",
-                                                "example": "this is description for post"
+                                                "example": "this is title for post"
                                             },
                                             "categories": {
                                                 "type": "array",
@@ -868,9 +840,9 @@
                                                     "type": "string",
                                                     "example": "this is body for post"
                                                 },
-                                                "description": {
+                                                "title": {
                                                     "type": "string",
-                                                    "example": "this is description for post"
+                                                    "example": "this is title for post"
                                                 },
                                                 "categories": {
                                                     "type": "array",
@@ -932,9 +904,9 @@
                                                     "type": "string",
                                                     "example": "this is body for post"
                                                 },
-                                                "description": {
+                                                "title": {
                                                     "type": "string",
-                                                    "example": "this is description for post"
+                                                    "example": "this is title for post"
                                                 },
                                                 "userName": {
                                                     "type": "string",
@@ -966,10 +938,6 @@
                                                         },
                                                         "type": "object"
                                                     }
-                                                },
-                                                "likesCount": {
-                                                    "type": "integer",
-                                                    "example": 5
                                                 },
                                                 "comments": {
                                                     "type": "array",
@@ -1047,9 +1015,9 @@
                                                 "type": "string",
                                                 "example": "this is body for update post"
                                             },
-                                            "description": {
+                                            "title": {
                                                 "type": "string",
-                                                "example": "this is description for update post"
+                                                "example": "this is title for update post"
                                             },
                                             "categories": {
                                                 "type": "array",
@@ -1086,9 +1054,9 @@
                                                     "type": "string",
                                                     "example": "this is body for post"
                                                 },
-                                                "description": {
+                                                "title": {
                                                     "type": "string",
-                                                    "example": "this is description for post"
+                                                    "example": "this is title for post"
                                                 },
                                                 "userName": {
                                                     "type": "string",
@@ -1120,10 +1088,6 @@
                                                         },
                                                         "type": "object"
                                                     }
-                                                },
-                                                "likesCount": {
-                                                    "type": "integer",
-                                                    "example": 5
                                                 },
                                                 "comments": {
                                                     "type": "array",
