@@ -10,6 +10,11 @@ import Form from "../Form/Form.vue";
 import FormButton from "../Form/FormButton/FormButton.vue";
 import FormLink from "../Form/FormLink/FormLink.vue";
 import FormSpan from "../Form/FormSpan/FormSpan.vue";
+import {useRouter} from "vue-router";
+
+import axios from "axios";
+import Message from "../Message.vue";
+import {useAuthStore} from "../../../stores/authStore.js";
 
 const formData = reactive({
   email: "",
@@ -25,23 +30,41 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, formData);
 
+const auth = reactive({})
+const errorAuth = reactive({})
+const router = useRouter()
+const store = useAuthStore()
 const submitForm = async () => {
   const result = await v$.value.$validate();
 
   if (result) {
-    alert('success')
-  } else {
-    alert('error')
+    axios.post('http://localhost:8876/api/v1/login', {
+      headers: {
+        'Accept' : 'application/json',
+      },
+
+      email: formData.email,
+      password: formData.password,
+    })
+        .then(response => {
+          auth.value = response.data
+
+          localStorage.setItem('token', auth.value.token)
+
+          router.push({name: 'me'})
+        })
+        .catch(error => {
+          errorAuth.value = error.response.data
+        });
   }
 }
-
 
 </script>
 
 <template>
   <FormTitle>Авторизация пользователя</FormTitle>
-
   <Form @submit.prevent="submitForm">
+    <Message :data="errorAuth.value"/>
     <FormItem>
       <i class="fa-solid fa-square-envelope text-5xl text-gray-900"></i>
 
