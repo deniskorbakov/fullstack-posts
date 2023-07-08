@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps({
+const props = defineProps({
     toggle: {
       type: Function,
       required: true
@@ -8,8 +8,15 @@
     show: {
       type: Boolean,
       required: true
+    },
+
+    user: {
+      type: Boolean,
+      required: true,
     }
   })
+
+
 </script>
 
 <template>
@@ -41,11 +48,11 @@
         <i class="fa-solid fa-bell text-2xl"></i>
       </button>
     </div>
-
-    <div class="flex-initial w-1/8 p-2">
+    <div class="flex-initial w-1/6 p-2">
       <button class="flex space-x-4">
         <i class="fa-solid fa-circle-user text-2xl"></i>
-        <router-link to="/registration">Войти</router-link>
+        <router-link v-if="props.user"  :to="{ name: 'me' }">Мой аккаунт</router-link>
+        <router-link v-else :to="{ name: 'auth' }">войти</router-link>
       </button>
     </div>
   </header>
