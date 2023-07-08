@@ -10,6 +10,11 @@ import Form from "../Form/Form.vue";
 import FormButton from "../Form/FormButton/FormButton.vue";
 import FormLink from "../Form/FormLink/FormLink.vue";
 import FormSpan from "../Form/FormSpan/FormSpan.vue";
+import axios from "axios";
+import {useRouter} from "vue-router";
+import Message from "../Message.vue";
+
+
 
 const formData = reactive({
   username: "",
@@ -29,23 +34,46 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, formData);
 
+const register = reactive({})
+const errorReg = reactive({})
+const router = useRouter()
+
 const submitForm = async () => {
   const result = await v$.value.$validate();
 
   if (result) {
-    alert('success')
-  } else {
-    alert('error')
+    axios.post('http://localhost:8876/api/v1/register', {
+      headers: {
+        'Accept' : 'application/json',
+      },
+
+      email: formData.email,
+      name: formData.username,
+      password: formData.password,
+      password_confirmation: formData.passwordConfirm
+    })
+        .then(response => {
+          register.value = response.data.data
+
+          localStorage.setItem('token', register.value.token)
+
+          router.push({name: 'me'})
+        })
+        .catch(error => {
+            errorReg.value = error.response
+        });
   }
 }
+
+
 
 
 </script>
 
 <template>
   <FormTitle>Регитрация пользователя</FormTitle>
-
   <Form @submit.prevent="submitForm">
+    <Message :data="errorReg.value"></Message>
     <FormItem>
       <i class="fa-solid fa-user text-5xl text-gray-900"></i>
 
