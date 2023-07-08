@@ -4,16 +4,28 @@ import SideBar from "./components/Main/SideBar/SideBar.vue";
 import {useSidebarStore} from "./stores/sidebarStore.js";
 import {storeToRefs} from "pinia";
 
+import {onMounted} from "vue";
+import {useAuthStore} from "./stores/authStore.js";
+
 const store = useSidebarStore()
 
 const {getSidebar} = store
 const {show} = storeToRefs(store)
+
+const storeAuth = useAuthStore()
+
+const {isAuth} = storeAuth
+const {user} = storeToRefs(storeAuth)
+
+
+onMounted(isAuth)
+
 </script>
 
 
 <template>
   <div id="app">
-    <Header :show="show" :toggle="getSidebar"></Header>
+    <Header :show="show" :toggle="getSidebar" :user="user"></Header>
     <div id="main" class="flex bg-gray-800 text-white h-screen">
       <SideBar v-show="show"></SideBar>
       <div class="bg-gray-900 w-full text-black">
