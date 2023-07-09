@@ -1,28 +1,15 @@
 <script setup>
-  import {onMounted, reactive} from "vue";
-  import {useRoute} from "vue-router";
-  import axios from "axios";
   import PostView from "./PostView.vue";
 
-  const post = reactive({})
+  import {onMounted} from "vue"
+  import {usePostIdStore} from "../../../stores/postIdStore.js";
+  import {storeToRefs} from "pinia";
 
-  const route = useRoute();
-  const postId = route.params.id;
+  const store = usePostIdStore()
 
-  function getPosts() {
+  const {post} = storeToRefs(store)
 
-    axios.get(`http://localhost:8876/api/v1/posts/${postId}`, {
-      headers: {
-        'Accept' : 'application/json'
-      }
-    })
-        .then(response => {
-          post.value = response.data
-        })
-        .catch(error => {
-          console.log(error);
-        });
-  }
+  const {getPosts} = store
 
   onMounted(getPosts)
 </script>

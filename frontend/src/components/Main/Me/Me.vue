@@ -1,28 +1,10 @@
 <script setup>
-import axios from "axios";
-import {useRouter} from "vue-router";
-import {useAuthStore} from "../../../stores/authStore.js";
+  import {useMeStore} from "../../../stores/meStore.js";
+  import {storeToRefs} from "pinia";
 
-const router = useRouter()
-const store = useAuthStore()
-
-store.isAuth()
-
-function logout(){
-  axios.options('http://localhost:8876/api/v1/logout', {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  })
-
-      .then( () => {
-        localStorage.removeItem('token')
-        store.isAuth()
-        router.push({name: 'auth'})
-      })
-}
-
-
+  const store = useMeStore()
+  const {auth} = storeToRefs(store)
+  const {logout} = store
 </script>
 
 <template>
@@ -31,10 +13,10 @@ function logout(){
 </div>
 
 <div class="mt-10 text-white text-left space-y-5 text-xl">
-  <p>Имя пользователя: {{store.userData.name}}</p>
-  <p>Почта: {{store.userData.email}}</p>
-  <p>Кол-во постов:{{store.userData.posts}}</p>
-  <p>Дата создания аккаунта: {{store.userData.createdAccount}}</p>
+  <p>Имя пользователя: {{auth.userData['name']}}</p>
+  <p>Почта: {{auth.userData['email']}}</p>
+  <p>Кол-во постов:{{auth.userData['posts']}}</p>
+  <p>Дата создания аккаунта: {{auth.userData['createdAccount']}}</p>
 </div>
 
 <div class="text-center mt-10">

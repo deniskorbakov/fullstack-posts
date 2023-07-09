@@ -1,79 +1,25 @@
 <script setup>
-import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength, sameAs} from '@vuelidate/validators'
-import {reactive, computed} from "vue";
+  import FormInput from "../Form/FormInput/FormInput.vue";
+  import FormTitle from "../Form/FormTitle/FormTitle.vue";
+  import FormItem from "../Form/FormItem/FormItem.vue";
+  import Form from "../Form/Form.vue";
+  import FormButton from "../Form/FormButton/FormButton.vue";
+  import FormLink from "../Form/FormLink/FormLink.vue";
+  import FormSpan from "../Form/FormSpan/FormSpan.vue";
+  import Message from "../Message.vue";
 
-import FormInput from "../Form/FormInput/FormInput.vue";
-import FormTitle from "../Form/FormTitle/FormTitle.vue";
-import FormItem from "../Form/FormItem/FormItem.vue";
-import Form from "../Form/Form.vue";
-import FormButton from "../Form/FormButton/FormButton.vue";
-import FormLink from "../Form/FormLink/FormLink.vue";
-import FormSpan from "../Form/FormSpan/FormSpan.vue";
-import axios from "axios";
-import {useRouter} from "vue-router";
-import Message from "../Message.vue";
+  import {useRegisterStore} from "../../../stores/registerStore.js";
+  import {storeToRefs} from "pinia";
 
-
-
-const formData = reactive({
-  username: "",
-  email: "",
-  password: "",
-  passwordConfirm: "",
-})
-
-const rules = computed(() => {
-  return {
-    username: {required, minLength: minLength(3)},
-    email: {required, email},
-    password: {required, minLength: minLength(8)},
-    passwordConfirm: {required, sameAs: sameAs(formData.password)},
-  }
-})
-
-const v$ = useVuelidate(rules, formData);
-
-const register = reactive({})
-const errorReg = reactive({})
-const router = useRouter()
-
-const submitForm = async () => {
-  const result = await v$.value.$validate();
-
-  if (result) {
-    axios.post('http://localhost:8876/api/v1/register', {
-      headers: {
-        'Accept' : 'application/json',
-      },
-
-      email: formData.email,
-      name: formData.username,
-      password: formData.password,
-      password_confirmation: formData.passwordConfirm
-    })
-        .then(response => {
-          register.value = response.data.data
-
-          localStorage.setItem('token', register.value.token)
-
-          router.push({name: 'me'})
-        })
-        .catch(error => {
-            errorReg.value = error.response
-        });
-  }
-}
-
-
-
-
+  const store = useRegisterStore()
+  const {formData, errorReg, register, v$} = storeToRefs(store)
+  const {submitForm} = store
 </script>
 
 <template>
   <FormTitle>Регитрация пользователя</FormTitle>
-  <Form @submit.prevent="submitForm">
-    <Message :data="errorReg.value"></Message>
+  <Form>
+    <Message :data="errorReg"></Message>
     <FormItem>
       <i class="fa-solid fa-user text-5xl text-gray-900"></i>
 
@@ -165,7 +111,7 @@ const submitForm = async () => {
       <router-link to="/auth" class="text-sky-500">Войти</router-link>
     </div>
 
-    <FormButton>
+    <FormButton @click.prevent="submitForm">
       Создать аккаунт
     </FormButton>
 
