@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\V1\Controller;
  *            allOf={
  *                @OA\Schema(
  *                    @OA\Property(property="body", type="string", example="this is body for post"),
- *                    @OA\Property(property="description", type="string", example="this is description for post"),
+ *                    @OA\Property(property="title", type="string", example="this is title for post"),
  *                    @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={1, 2, 3}),
  *                )
  *            }
@@ -31,7 +31,7 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="body", type="string", example="this is body for post"),
- *                @OA\Property(property="description", type="string", example="this is description for post"),
+ *                @OA\Property(property="title", type="string", example="this is title for post"),
  *                @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={1, 2, 3}),
  *            ),
  *        ),
@@ -62,14 +62,13 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="array", @OA\Items(
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="body", type="string", example="this is body for post"),
- *                @OA\Property(property="description", type="string", example="this is description for post"),
+ *                @OA\Property(property="title", type="string", example="this is title for post"),
  *                @OA\Property(property="userName", type="string", example="deniskorbakov"),
  *                @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={1, 2, 3}),
  *                @OA\Property(property="likes", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="borisov"),
  *                )),
- *                @OA\Property(property="likesCount", type="integer", example=5),
  *                @OA\Property(property="comments", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="egor-Molot"),
@@ -106,14 +105,13 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="body", type="string", example="this is body for post"),
- *                @OA\Property(property="description", type="string", example="this is description for post"),
+ *                @OA\Property(property="title", type="string", example="this is title for post"),
  *                @OA\Property(property="userName", type="string", example="deniskorbakov"),
  *                @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={1, 2, 3}),
  *                @OA\Property(property="likes", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="borisov"),
  *                )),
- *                @OA\Property(property="likesCount", type="integer", example=5),
  *                @OA\Property(property="comments", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="egor-Molot"),
@@ -148,7 +146,7 @@ use App\Http\Controllers\Api\V1\Controller;
  *            allOf={
  *                @OA\Schema(
  *                    @OA\Property(property="body", type="string", example="this is body for update post"),
- *                    @OA\Property(property="description", type="string", example="this is description for update post"),
+ *                    @OA\Property(property="title", type="string", example="this is title for update post"),
  *                    @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={2, 4}),
  *                )
  *            }
@@ -162,14 +160,13 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="body", type="string", example="this is body for post"),
- *                @OA\Property(property="description", type="string", example="this is description for post"),
+ *                @OA\Property(property="title", type="string", example="this is title for post"),
  *                @OA\Property(property="userName", type="string", example="deniskorbakov"),
  *                @OA\Property(property="categories", type="array", @OA\Items(type="integer"), example={1, 2, 3}),
  *                @OA\Property(property="likes", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="borisov"),
  *                )),
- *                @OA\Property(property="likesCount", type="integer", example=5),
  *                @OA\Property(property="comments", type="array", @OA\Items(
  *                    @OA\Property(property="id", type="integer", example=1),
  *                    @OA\Property(property="userName", type="string", example="egor-Molot"),

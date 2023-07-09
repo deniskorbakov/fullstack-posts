@@ -11,7 +11,7 @@ class PostService
         $post = Post::create([
             'user_id' => auth()->user()->getAuthIdentifier(),
             'body' => $fields['body'],
-            'description' => $fields['description'],
+            'title' => $fields['title'],
         ]);
 
         $categories = Category::whereIn('id', $fields['categories'])->get();
@@ -28,7 +28,7 @@ class PostService
 
         $post->update([
             'body' => $fields['body'],
-            'description' => $fields['description'],
+            'title' => $fields['title'],
         ]);
 
 

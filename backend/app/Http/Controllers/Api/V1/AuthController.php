@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $response = $service->login($fields);
 
-        return response(['data' => $response->original], $response->status());
+        return response($response->original, $response->status());
     }
 
     public function logout() {

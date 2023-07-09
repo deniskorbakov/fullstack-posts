@@ -1,47 +1,25 @@
 <script setup>
-import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength, sameAs} from '@vuelidate/validators'
-import {reactive, computed} from "vue";
+  import FormInput from "../Form/FormInput/FormInput.vue";
+  import FormTitle from "../Form/FormTitle/FormTitle.vue";
+  import FormItem from "../Form/FormItem/FormItem.vue";
+  import Form from "../Form/Form.vue";
+  import FormButton from "../Form/FormButton/FormButton.vue";
+  import FormLink from "../Form/FormLink/FormLink.vue";
+  import FormSpan from "../Form/FormSpan/FormSpan.vue";
+  import Message from "../Message.vue";
 
-import FormInput from "../Form/FormInput/FormInput.vue";
-import FormTitle from "../Form/FormTitle/FormTitle.vue";
-import FormItem from "../Form/FormItem/FormItem.vue";
-import Form from "../Form/Form.vue";
-import FormButton from "../Form/FormButton/FormButton.vue";
-import FormLink from "../Form/FormLink/FormLink.vue";
-import FormSpan from "../Form/FormSpan/FormSpan.vue";
+  import {useLoginStore} from "../../../stores/loginStore.js";
+  import {storeToRefs} from "pinia";
 
-const formData = reactive({
-  email: "",
-  password: "",
-})
-
-const rules = computed(() => {
-  return {
-    email: {required, email},
-    password: {required, minLength: minLength(8)},
-  }
-})
-
-const v$ = useVuelidate(rules, formData);
-
-const submitForm = async () => {
-  const result = await v$.value.$validate();
-
-  if (result) {
-    alert('success')
-  } else {
-    alert('error')
-  }
-}
-
-
+  const store = useLoginStore()
+  const {formData, errorAuth, v$} = storeToRefs(store)
+  const {submitForm} = store
 </script>
 
 <template>
   <FormTitle>Авторизация пользователя</FormTitle>
-
-  <Form @submit.prevent="submitForm">
+  <Form>
+    <Message :data="errorAuth.value"/>
     <FormItem>
       <i class="fa-solid fa-square-envelope text-5xl text-gray-900"></i>
 
@@ -90,7 +68,7 @@ const submitForm = async () => {
       <router-link to="/registration" class="text-sky-500">Регистрация</router-link>
     </div>
 
-    <FormButton>
+    <FormButton @click.prevent="submitForm">
       Войти в аккаунт
     </FormButton>
 
