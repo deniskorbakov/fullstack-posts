@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
-import {reactive} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 
 export const usePostListStore = defineStore('postListStore', () => {
-    const posts = reactive({})
+    const posts = ref({})
+
+    const nextLink = ref(null)
      function getPosts() {
         axios.get('http://localhost:8876/api/v1/posts', {
             headers: {
@@ -12,11 +14,30 @@ export const usePostListStore = defineStore('postListStore', () => {
         })
             .then(response => {
                 posts.value = response.data.data
+                nextLink.value = response.data.links['next']
+
             })
             .catch(error => {
                 console.log(error);
             });
     }
 
-    return {posts, getPosts}
+    function nextPost() {
+        axios.get( nextLink.value, {
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+            .then(response => {
+                nextLink.value = response.data.links['next']
+                posts.value = [...posts.value, ...response.data.data]
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    }
+
+    return {posts, getPosts, nextPost, nextLink, }
 })
