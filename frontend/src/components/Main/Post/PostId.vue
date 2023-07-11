@@ -6,16 +6,14 @@
   import {storeToRefs} from "pinia";
 
   const store = usePostIdStore()
-
   const {post} = storeToRefs(store)
-
   const {getPosts} = store
 
   onMounted(getPosts)
 </script>
 
 <template>
-  <PostView v-for="item in post.value" :data="item"></PostView>
+  <PostView v-for="item in post.value" :data="item" :key="item['id']"></PostView>
 </template>
 
 <style scoped>
