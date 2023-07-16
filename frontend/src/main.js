@@ -10,6 +10,20 @@ import Home from "./components/Main/Home.vue";
 import PostId from "./components/Main/Post/PostId.vue";
 import Me from "./components/Main/Me/Me.vue";
 
+const authGuard = (to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token')
+
+    if (to.name === 'auth' || to.name === 'reg' && isAuthenticated) {
+        next({ name: 'me' });
+    } else if (to.name === 'auth' || to.name === 'reg' && !isAuthenticated) {
+        next();
+    } else if (to.name !== 'auth' || to.name !== 'reg' && !isAuthenticated) {
+        next({ name: 'auth' });
+    } else {
+        next();
+    }
+};
+
 
 const routes = [
     {
@@ -20,11 +34,13 @@ const routes = [
         path: '/registration',
         name: 'reg',
         component: Registration,
+        beforeEnter: authGuard,
     },
     {
         path: '/auth',
         name: 'auth',
         component: Auth,
+        beforeEnter: authGuard,
     },
     {
         path: '/create',
@@ -33,21 +49,13 @@ const routes = [
     {
         path: '/post/:id',
         name: 'postId',
-        component: PostId },
+        component: PostId
+    },
     {
         path: '/me',
         name: 'me',
         component: Me,
-        meta: {requiresAuth: true},
-        beforeEnter: (from, to, next) => {
-            const userAuth = localStorage.getItem('token');
-
-            if (userAuth) {
-                next()
-            } else {
-                next('/auth')
-            }
-    }   }
+    }
 ]
 
 const router = createRouter({
