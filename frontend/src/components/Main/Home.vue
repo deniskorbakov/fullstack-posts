@@ -8,11 +8,13 @@
   const store = usePostListStore()
   const {posts, nextLink} = storeToRefs(store)
   const {getPosts, nextPost} = store
+  const observers = ref(null)
 
 
-  onMounted(getPosts)
 
   onMounted(() => {
+    getPosts()
+
     const options = {
       rootMargin: "0px",
       threshold: 1.0,
@@ -33,7 +35,7 @@
 
    <PostItem v-for="item in posts" :data="item" :key="item['id']"></PostItem>
 
-  <div ref="observers" class="observer h-16 w-full"></div>
+  <div ref="observers" class="observer h-32 w-full"></div>
 
 </template>
 
