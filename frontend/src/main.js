@@ -13,16 +13,30 @@ import Me from "./components/Main/Me/Me.vue";
 const authGuard = (to, from, next) => {
     const isAuthenticated = localStorage.getItem('token')
 
-    if (to.name === 'auth' || to.name === 'reg' && isAuthenticated) {
+    if (to.name === 'auth' && isAuthenticated) {
         next({ name: 'me' });
-    } else if (to.name === 'auth' || to.name === 'reg' && !isAuthenticated) {
+    } else if (to.name === 'auth' && !isAuthenticated) {
         next();
-    } else if (to.name !== 'auth' || to.name !== 'reg' && !isAuthenticated) {
-        next({ name: 'auth' });
+    } else if (to.name !== 'auth' && !isAuthenticated) {
+        next();
     } else {
         next();
     }
 };
+
+const meGuard = (to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token')
+
+    if (to.name === 'me' && isAuthenticated) {
+        next();
+    } else if (to.name === 'me' && !isAuthenticated) {
+        next({name: 'auth'});
+    } else if (to.name !== 'me' && !isAuthenticated) {
+        next();
+    } else {
+        next();
+    }
+}
 
 
 const routes = [
@@ -55,6 +69,7 @@ const routes = [
         path: '/me',
         name: 'me',
         component: Me,
+        beforeEnter: meGuard,
     }
 ]
 
