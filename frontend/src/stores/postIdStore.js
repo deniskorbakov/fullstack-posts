@@ -18,7 +18,6 @@ export const usePostIdStore = defineStore('postIdStore', () => {
         })
             .then(response => {
                 post.value = response.data
-                console.log( route.params.id)
             })
             .catch(error => {
                 console.log(error);
