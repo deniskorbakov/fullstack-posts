@@ -8,10 +8,9 @@ export const usePostIdStore = defineStore('postIdStore', () => {
     const post = reactive({})
 
     const route = useRoute();
-    const postId = route.params.id;
 
     function getPosts() {
-
+        const postId = route.params.id;
         axios.get(`http://localhost:8876/api/v1/posts/${postId}`, {
             headers: {
                 'Accept' : 'application/json'

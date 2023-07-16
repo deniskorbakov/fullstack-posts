@@ -27,7 +27,9 @@ onMounted(isAuth)
   <div id="app">
     <Header :show="show" :toggle="getSidebar" :user="user"></Header>
     <div id="main" class="flex bg-gray-800 text-white h-screen">
-      <SideBar v-show="show"></SideBar>
+      <Transition>
+        <SideBar v-show="show"></SideBar>
+      </Transition>
       <div class="bg-gray-900 w-full text-black">
         <div class="w-1/2 h-screen mx-auto overflow-auto">
           <RouterView/>
@@ -44,5 +46,15 @@ h2 {
 
 h3 {
   @apply text-xl
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
