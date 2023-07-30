@@ -10,6 +10,8 @@ import Home from "./components/Main/Home.vue";
 import PostId from "./components/Main/Post/PostId.vue";
 import Me from "./components/Main/Me/Me.vue";
 
+
+
 const authGuard = (to, from, next) => {
     const isAuthenticated = localStorage.getItem('token')
 
@@ -18,6 +20,20 @@ const authGuard = (to, from, next) => {
     } else if (to.name === 'auth' && !isAuthenticated) {
         next();
     } else if (to.name !== 'auth' && !isAuthenticated) {
+        next();
+    } else {
+        next();
+    }
+};
+
+const regGuard = (to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token')
+
+    if (to.name === 'reg' && isAuthenticated) {
+        next({ name: 'me' });
+    } else if (to.name === 'reg' && !isAuthenticated) {
+        next();
+    } else if (to.name !== 'reg' && !isAuthenticated) {
         next();
     } else {
         next();
@@ -48,7 +64,7 @@ const routes = [
         path: '/registration',
         name: 'reg',
         component: Registration,
-        beforeEnter: authGuard,
+        beforeEnter: regGuard,
     },
     {
         path: '/auth',
