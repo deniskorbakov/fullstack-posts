@@ -10,19 +10,49 @@ import Home from "./components/Main/Home.vue";
 import PostId from "./components/Main/Post/PostId.vue";
 import Me from "./components/Main/Me/Me.vue";
 
+
+
 const authGuard = (to, from, next) => {
     const isAuthenticated = localStorage.getItem('token')
 
-    if (to.name === 'auth' || to.name === 'reg' && isAuthenticated) {
+    if (to.name === 'auth' && isAuthenticated) {
         next({ name: 'me' });
-    } else if (to.name === 'auth' || to.name === 'reg' && !isAuthenticated) {
+    } else if (to.name === 'auth' && !isAuthenticated) {
         next();
-    } else if (to.name !== 'auth' || to.name !== 'reg' && !isAuthenticated) {
-        next({ name: 'auth' });
+    } else if (to.name !== 'auth' && !isAuthenticated) {
+        next();
     } else {
         next();
     }
 };
+
+const regGuard = (to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token')
+
+    if (to.name === 'reg' && isAuthenticated) {
+        next({ name: 'me' });
+    } else if (to.name === 'reg' && !isAuthenticated) {
+        next();
+    } else if (to.name !== 'reg' && !isAuthenticated) {
+        next();
+    } else {
+        next();
+    }
+};
+
+const meGuard = (to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token')
+
+    if (to.name === 'me' && isAuthenticated) {
+        next();
+    } else if (to.name === 'me' && !isAuthenticated) {
+        next({name: 'auth'});
+    } else if (to.name !== 'me' && !isAuthenticated) {
+        next();
+    } else {
+        next();
+    }
+}
 
 
 const routes = [
@@ -34,7 +64,7 @@ const routes = [
         path: '/registration',
         name: 'reg',
         component: Registration,
-        beforeEnter: authGuard,
+        beforeEnter: regGuard,
     },
     {
         path: '/auth',
@@ -55,6 +85,7 @@ const routes = [
         path: '/me',
         name: 'me',
         component: Me,
+        beforeEnter: meGuard,
     }
 ]
 
