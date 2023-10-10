@@ -1,5 +1,6 @@
 <script setup>
 import PostComment from "./PostComment/PostComment.vue";
+import {showDeclensionsComments} from '../../../helpers/showDeclensionsComments.js';
 
 const props = defineProps({
   data: {
@@ -8,6 +9,7 @@ const props = defineProps({
     default: () => {}
   }
 })
+
 </script>
 
 <template>
@@ -60,7 +62,7 @@ const props = defineProps({
     <div class="container bg-white h-max p-10 rounded mt-10">
       <div class="flex">
         <div class="flex-initial w-64">
-          <p>{{props.data['comments'].length}} Коментариев</p>
+          <p>{{showDeclensionsComments(props.data['comments'].length)}}</p>
         </div>
 
         <div class="flex-initial w-full text-right">
