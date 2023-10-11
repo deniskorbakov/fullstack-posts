@@ -30,8 +30,8 @@ onMounted(isAuth)
       <Transition>
         <SideBar v-show="show"></SideBar>
       </Transition>
-      <div class="bg-gray-900 w-full text-black">
-        <div class="w-1/2 h-screen mx-auto overflow-auto">
+      <div class="bg-gray-900 w-full text-black example">
+        <div class="w-1/2 h-screen mx-auto overflow-scroll scrollbar-hide">
           <RouterView/>
         </div>
       </div>
