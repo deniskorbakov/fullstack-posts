@@ -1,5 +1,8 @@
 <script setup>
 import PostComment from "./PostComment/PostComment.vue";
+import {showDeclensionsComments} from '../../../helpers/showDeclensionsComments.js';
+import {convertJsonInHtml} from "../../../helpers/convertJsonInHtml.js";
+import {ref} from "vue";
 
 const props = defineProps({
   data: {
@@ -8,6 +11,8 @@ const props = defineProps({
     default: () => {}
   }
 })
+
+const body = ref(convertJsonInHtml(props.data['body']));
 </script>
 
 <template>
@@ -36,7 +41,7 @@ const props = defineProps({
     </div>
 
     <div class="text-left mt-2 text-ellipsis whitespace-normal space-y-5 p-2">
-      {{props.data['body']}}
+      <div v-html="body"></div>
     </div>
 
     <div class="flex h-10 p-2 mt-5">
@@ -60,7 +65,7 @@ const props = defineProps({
     <div class="container bg-white h-max p-10 rounded mt-10">
       <div class="flex">
         <div class="flex-initial w-64">
-          <p>{{props.data['comments'].length}} Коментариев</p>
+          <p>{{showDeclensionsComments(props.data['comments'].length)}}</p>
         </div>
 
         <div class="flex-initial w-full text-right">

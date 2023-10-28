@@ -7,7 +7,7 @@ export const usePostListStore = defineStore('postListStore', () => {
 
     const nextLink = ref(null)
      function getPosts() {
-        axios.get('http://localhost:8876/api/v1/posts', {
+        axios.get(import.meta.env.VITE_URL_API + '/posts', {
             headers: {
                 'Accept' : 'application/json'
             }

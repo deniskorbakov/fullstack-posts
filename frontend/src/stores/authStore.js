@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('authStore', () => {
     const userData = ref({})
 
    function isAuth(){
-       axios.get('http://localhost:8876/api/v1/user', {
+       axios.get(import.meta.env.VITE_URL_API + '/user', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },

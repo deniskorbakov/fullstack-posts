@@ -12,7 +12,7 @@ export const useMeStore = defineStore('meStore', () => {
     auth.isAuth()
 
     function logout(){
-        axios.options('http://localhost:8876/api/v1/logout', {
+        axios.options(import.meta.env.VITE_URL_API + '/logout', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },

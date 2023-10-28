@@ -33,7 +33,7 @@ export const useRegisterStore = defineStore('registerStore', () => {
         const result = await v$.value.$validate();
 
         if (result) {
-            axios.post('http://localhost:8876/api/v1/register', {
+            axios.post(import.meta.env.VITE_URL_API + '/register', {
                 headers: {
                     'Accept' : 'application/json',
                 },
