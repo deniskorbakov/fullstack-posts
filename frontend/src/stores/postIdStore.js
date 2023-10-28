@@ -11,7 +11,7 @@ export const usePostIdStore = defineStore('postIdStore', () => {
 
     function getPosts() {
         const postId = route.params.id;
-        axios.get(`http://localhost:8876/api/v1/posts/${postId}`, {
+        axios.get(import.meta.env.VITE_URL_API + `/posts/${postId}`, {
             headers: {
                 'Accept' : 'application/json'
             }

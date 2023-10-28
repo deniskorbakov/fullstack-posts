@@ -120,7 +120,7 @@ export const useEditorStore = defineStore('editorStore', () => {
     const userToken = localStorage.getItem('token');
 
     function createPost(body) {
-        axios.post('http://localhost:8876/api/v1/posts', {
+        axios.post(import.meta.env.VITE_URL_API + '/posts', {
             body: JSON.stringify(body),
             title: title.value,
             categories: [1,2]

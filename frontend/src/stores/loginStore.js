@@ -27,7 +27,7 @@ export const useLoginStore = defineStore('loginStore', () => {
         const result = await v$.value.$validate();
 
         if (result) {
-            axios.post('http://localhost:8876/api/v1/login', {
+            axios.post(import.meta.env.VITE_URL_API + '/login', {
                 headers: {
                     'Accept' : 'application/json',
                 },
