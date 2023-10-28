@@ -1,64 +1,24 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
-import {createRouter, createWebHistory} from "vue-router";
 import Registration from "./components/Main/Registration/Registration.vue";
 import Auth from "./components/Main/Auth/Auth.vue";
 import PostCreate from "./components/Main/Post/PostCreate/PostCreate.vue";
-import {createPinia} from "pinia";
 import Home from "./components/Main/Home.vue";
 import PostId from "./components/Main/Post/PostId.vue";
 import Me from "./components/Main/Me/Me.vue";
-
-
-
-const authGuard = (to, from, next) => {
-    const isAuthenticated = localStorage.getItem('token')
-
-    if (to.name === 'auth' && isAuthenticated) {
-        next({ name: 'me' });
-    } else if (to.name === 'auth' && !isAuthenticated) {
-        next();
-    } else if (to.name !== 'auth' && !isAuthenticated) {
-        next();
-    } else {
-        next();
-    }
-};
-
-const regGuard = (to, from, next) => {
-    const isAuthenticated = localStorage.getItem('token')
-
-    if (to.name === 'reg' && isAuthenticated) {
-        next({ name: 'me' });
-    } else if (to.name === 'reg' && !isAuthenticated) {
-        next();
-    } else if (to.name !== 'reg' && !isAuthenticated) {
-        next();
-    } else {
-        next();
-    }
-};
-
-const meGuard = (to, from, next) => {
-    const isAuthenticated = localStorage.getItem('token')
-
-    if (to.name === 'me' && isAuthenticated) {
-        next();
-    } else if (to.name === 'me' && !isAuthenticated) {
-        next({name: 'auth'});
-    } else if (to.name !== 'me' && !isAuthenticated) {
-        next();
-    } else {
-        next();
-    }
-}
-
+import {createPinia} from "pinia";
+import {createRouter, createWebHistory} from "vue-router";
+import {postCreateGuard} from "./guards/postCreateGuard.js";
+import {authGuard} from "./guards/authGuard.js";
+import {regGuard} from "./guards/regGuard.js";
+import {meGuard} from "./guards/meGuard.js";
+import './style.css'
 
 const routes = [
     {
         path: '/',
-        component: Home
+        name: 'home',
+        component: Home,
     },
     {
         path: '/registration',
@@ -74,12 +34,14 @@ const routes = [
     },
     {
         path: '/create',
-        component: PostCreate
+        name: 'create',
+        component: PostCreate,
+        beforeEnter: postCreateGuard,
     },
     {
         path: '/post/:id',
         name: 'postId',
-        component: PostId
+        component: PostId,
     },
     {
         path: '/me',
@@ -95,8 +57,10 @@ const router = createRouter({
 })
 
 const app = createApp(App)
-app.use(createPinia())
-app.use(router)
-app.mount('#app')
+
+app.use(createPinia());
+app.use(router);
+
+app.mount('#app');
 
 
