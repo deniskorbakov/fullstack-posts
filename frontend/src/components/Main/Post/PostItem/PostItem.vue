@@ -1,12 +1,23 @@
 <script setup>
+  import {convertJsonInHtml} from "../../../../helpers/convertJsonInHtml.js";
+  import {onBeforeMount, onMounted, ref} from "vue";
+
   const props = defineProps({
     data: {
       type: Object,
       required: true,
       default: () => {},
     }
-  })
+  });
+
+  const body = ref();
+
+  onBeforeMount(() => {
+    body.value = convertJsonInHtml(props.data['body']);
+  });
 </script>
+
+
 
 <template>
   <div class="container bg-white h-max mt-10 rounded-lg p-5">
@@ -30,7 +41,7 @@
           </div>
 
           <div class="text-left mt-2 text-ellipsis whitespace-normal space-y-5">
-            {{props.data['body']}}
+            <div v-html="body"></div>
           </div>
         </router-link>
 
