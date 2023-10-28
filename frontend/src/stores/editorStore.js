@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia'
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
@@ -12,7 +11,9 @@ import InlineCode from '@editorjs/inline-code'
 import LinkTool from '@editorjs/link'
 import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
+import { defineStore } from 'pinia'
 import {reactive, ref} from "vue";
+import axios from "axios";
 
 export const useEditorStore = defineStore('editorStore', () => {
     const editor = new EditorJS({
@@ -83,7 +84,7 @@ export const useEditorStore = defineStore('editorStore', () => {
                 },
 
                 tools: {
-                    "warning": { // <-- 'Warning' tool will accept this dictionary section
+                    "warning": {
                         "Title": "Название",
                         "Message": "Сообщение",
                     },
@@ -116,11 +117,32 @@ export const useEditorStore = defineStore('editorStore', () => {
 
     const title = ref('')
     const body = reactive({})
+    const userToken = localStorage.getItem('token');
+
+    function createPost(body) {
+        axios.post('http://localhost:8876/api/v1/posts', {
+            body: JSON.stringify(body),
+            title: title.value,
+            categories: [1,2]
+        },
+    {
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : `Bearer ${userToken}`
+        }})
+        .then(response => {
+            console.log('yes');
+        })
+        .catch(error => {
+            console.log(error, body);
+        });
+    }
 
     function save() {
         editor.save().then((outputData) => {
-            body.value = outputData
-            console.log(body)
+            body.value = outputData;
+
+            createPost(outputData.blocks);
         });
     }
 
