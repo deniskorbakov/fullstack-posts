@@ -3,23 +3,28 @@ import Header from "./components/Header/Header.vue";
 import SideBar from "./components/Main/SideBar/SideBar.vue";
 import {useSidebarStore} from "./stores/sidebarStore.js";
 import {storeToRefs} from "pinia";
-
 import {onMounted} from "vue";
 import {useAuthStore} from "./stores/authStore.js";
+import PopUp from "./components/PopUp/PopUp.vue";
+import {usePopUpStore} from "./stores/popUpStore.js";
 
-const store = useSidebarStore()
+const store = useSidebarStore();
 
-const {getSidebar} = store
-const {show} = storeToRefs(store)
 
-const storeAuth = useAuthStore()
+const {getSidebar} = store;
+const {show} = storeToRefs(store);
 
-const {isAuth} = storeAuth
-const {user} = storeToRefs(storeAuth)
+const storeAuth = useAuthStore();
+
+const {isAuth} = storeAuth;
+const {user} = storeToRefs(storeAuth);
+
+const popUpStore = usePopUpStore();
+
+const {isShow, message} = storeToRefs(popUpStore);
 
 
 onMounted(isAuth)
-
 </script>
 
 
@@ -33,6 +38,7 @@ onMounted(isAuth)
       <div class="bg-gray-900 w-full text-black example">
         <div class="w-1/2 h-screen mx-auto overflow-scroll scrollbar-hide">
           <RouterView/>
+          <PopUp v-show="isShow">{{message}}</PopUp>
         </div>
       </div>
     </div>
