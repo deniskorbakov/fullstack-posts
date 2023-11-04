@@ -1,9 +1,10 @@
-import {defineStore} from 'pinia'
+import {defineStore, storeToRefs} from 'pinia'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength,} from '@vuelidate/validators'
 import {reactive, computed} from "vue";
 import {useRouter} from "vue-router";
 import axios from "axios";
+import {useAuthStore} from "./authStore.js";
 
 export const useLoginStore = defineStore('loginStore', () => {
     const formData = reactive({
@@ -23,6 +24,11 @@ export const useLoginStore = defineStore('loginStore', () => {
     const auth = reactive({})
     const errorAuth = reactive({})
     const router = useRouter()
+
+    const storeAuth = useAuthStore();
+
+    const {isAuth} = storeAuth;
+
     const submitForm = async () => {
         const result = await v$.value.$validate();
 
@@ -39,7 +45,7 @@ export const useLoginStore = defineStore('loginStore', () => {
                     auth.value = response.data
 
                     localStorage.setItem('token', auth.value.token)
-
+                    isAuth();
                     router.push({name: 'me'})
                 })
                 .catch(error => {
