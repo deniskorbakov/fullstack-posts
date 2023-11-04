@@ -1,4 +1,6 @@
 <script setup>
+import {onMounted, ref} from "vue";
+
 const props = defineProps({
     toggle: {
       type: Function,
@@ -15,8 +17,6 @@ const props = defineProps({
       required: true,
     }
   })
-
-
 </script>
 
 <template>
