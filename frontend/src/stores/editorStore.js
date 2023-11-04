@@ -11,12 +11,19 @@ import InlineCode from '@editorjs/inline-code'
 import LinkTool from '@editorjs/link'
 import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
-import { defineStore } from 'pinia'
-import {reactive, ref} from "vue";
 import axios from "axios";
+import { defineStore } from 'pinia'
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import {usePopUpStore} from "./popUpStore.js";
 
 export const useEditorStore = defineStore('editorStore', () => {
-    const editor = new EditorJS({
+    const title = ref('')
+    const body = reactive({})
+    const userToken = localStorage.getItem('token');
+
+    let myEditor = function () {
+        window.editor = new EditorJS({
         holder: 'editorjs',
         autofocus: true,
         placeholder: 'Нажмите Tab для выбора инструмента',
@@ -26,7 +33,7 @@ export const useEditorStore = defineStore('editorStore', () => {
                 config: {
                     placeholder: 'Enter a header',
                     levels: [2, 3],
-                    defaultLevel: 2
+                    defaultLevel: 2,
                 }
             },
             list: List,
@@ -112,14 +119,15 @@ export const useEditorStore = defineStore('editorStore', () => {
             }
         },
 
-    });
+    })};
 
-
-    const title = ref('')
-    const body = reactive({})
-    const userToken = localStorage.getItem('token');
+    const router = useRouter();
 
     function createPost(body) {
+        const popUpStore = usePopUpStore();
+
+        const {isShowPopUpWindow} = popUpStore;
+
         axios.post(import.meta.env.VITE_URL_API + '/posts', {
             body: JSON.stringify(body),
             title: title.value,
@@ -130,11 +138,11 @@ export const useEditorStore = defineStore('editorStore', () => {
             'Accept' : 'application/json',
             'Authorization' : `Bearer ${userToken}`
         }})
-        .then(response => {
-            console.log('yes');
+        .then( ()=> {
+            router.push({name: 'home'})
         })
         .catch(error => {
-            console.log(error, body);
+            isShowPopUpWindow(error.response.data['message']);
         });
     }
 
@@ -146,5 +154,5 @@ export const useEditorStore = defineStore('editorStore', () => {
         });
     }
 
-    return {editor, title, body, save}
+    return {myEditor, title, body, save}
 })
