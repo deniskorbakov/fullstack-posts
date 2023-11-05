@@ -1,16 +1,14 @@
 <script setup>
   import PostItem from "./Post/PostItem/PostItem.vue";
-
   import {usePostListStore} from "../../stores/postListStore.js";
   import {onMounted, ref} from "vue";
   import {storeToRefs} from "pinia";
 
   const store = usePostListStore()
-  const {posts, nextLink} = storeToRefs(store)
+  const {posts, nextLink, infoForLastPosts} = storeToRefs(store)
   const {getPosts, nextPost} = store
+
   const observers = ref(null)
-
-
 
   onMounted(() => {
     getPosts()
@@ -20,7 +18,7 @@
       threshold: 1.0,
     };
 
-    const callback = (entries, observer) => {
+    const callback = (entries) => {
       if (entries[0].isIntersecting && nextLink.value != null) {
         nextPost()
       }
@@ -33,10 +31,15 @@
 
 <template>
 
-   <PostItem v-for="item in posts" :data="item" :key="item['id']"></PostItem>
+  <PostItem v-for="item in posts" :data="item" :key="item['id']"></PostItem>
 
-  <div ref="observers" class="observer h-32 w-full"></div>
+  <div ref="observers" class="observer h-10 w-full"></div>
 
+  <div class="text-white text-center mb-32 h-32">
+    <p class="text-2xl">
+      {{infoForLastPosts}}
+    </p>
+  </div>
 </template>
 
 <style scoped>
