@@ -12,7 +12,7 @@ onMounted(myEditor)
 </script>
 
 <template>
-  <input class="text-3xl min-w-full" style="outline: none" v-model="title" placeholder="Заголовок">
+  <input class="text-3xl min-w-full" style="outline: none" v-model.trim.capitalize="title" maxlength="50" placeholder="Заголовок">
 
   <div id="editorjs" class="mt-5"></div>
 
