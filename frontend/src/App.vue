@@ -1,25 +1,25 @@
 <script setup>
 import Header from "./components/Header/Header.vue";
 import SideBar from "./components/Main/SideBar/SideBar.vue";
-import {useSidebarStore} from "./stores/sidebarStore.js";
-import {storeToRefs} from "pinia";
-import {useAuthStore} from "./stores/authStore.js";
 import PopUp from "./components/PopUp/PopUp.vue";
+import {useSidebarStore} from "./stores/sidebarStore.js";
+import {useAuthStore} from "./stores/authStore.js";
 import {usePopUpStore} from "./stores/popUpStore.js";
+import {storeToRefs} from "pinia";
+import {onMounted} from "vue";
 
 const store = useSidebarStore();
-
-
-const {getSidebar} = store;
 const {show} = storeToRefs(store);
+const {getSidebar} = store;
 
 const storeAuth = useAuthStore();
-
 const {user} = storeToRefs(storeAuth);
+const {isAuth} = storeAuth;
 
 const popUpStore = usePopUpStore();
-
 const {isShow, message} = storeToRefs(popUpStore);
+
+onMounted(isAuth)
 </script>
 
 
