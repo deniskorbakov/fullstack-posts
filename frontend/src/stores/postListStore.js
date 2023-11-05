@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import axios from "axios";
 
 export const usePostListStore = defineStore('postListStore', () => {
     const posts = ref({})
 
     const nextLink = ref(null)
+
+    const infoForLastPosts = ref('')
      function getPosts() {
         axios.get(import.meta.env.VITE_URL_API + '/posts', {
             headers: {
@@ -22,6 +24,12 @@ export const usePostListStore = defineStore('postListStore', () => {
             });
     }
 
+    function checkOnLastPagePosts(currentPage, lastPage) {
+        if (currentPage === lastPage) {
+            infoForLastPosts.value = 'Посты закончились, обновите страницу';
+        }
+    }
+
     function nextPost() {
         axios.get( nextLink.value, {
             headers: {
@@ -32,6 +40,7 @@ export const usePostListStore = defineStore('postListStore', () => {
                 nextLink.value = response.data.links['next']
                 posts.value = [...posts.value, ...response.data.data]
 
+                checkOnLastPagePosts(response.data.meta['current_page'], response.data.meta['last_page']);
             })
             .catch(error => {
                 console.log(error);
@@ -39,5 +48,5 @@ export const usePostListStore = defineStore('postListStore', () => {
 
     }
 
-    return {posts, getPosts, nextPost, nextLink, }
+    return {posts, nextLink, infoForLastPosts, getPosts, nextPost}
 })

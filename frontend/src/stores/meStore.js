@@ -17,12 +17,11 @@ export const useMeStore = defineStore('meStore', () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
         })
-
-            .then( () => {
-                localStorage.removeItem('token')
-                auth.isAuth()
-                router.push({name: 'auth'})
-            })
+        .then( () => {
+            localStorage.removeItem('token')
+            auth.isAuth()
+            router.push({name: 'auth'})
+        })
     }
 
     return{auth, logout}

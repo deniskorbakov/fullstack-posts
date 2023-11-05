@@ -4,6 +4,7 @@
 </script>
 
 <template>
+  <Transition>
   <div class="flex-initial mt-5 w-1/6 overflow-auto">
     <div class="flex-col text-center space-y-2">
       <TitleBar>
@@ -76,6 +77,7 @@
       </ItemBar>
     </div>
   </div>
+  </Transition>
 </template>
 
 <style scoped>
