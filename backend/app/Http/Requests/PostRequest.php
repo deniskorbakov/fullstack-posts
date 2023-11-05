@@ -23,7 +23,7 @@ class PostRequest extends FormRequest
     {
         return [
             'body' => 'required|json',
-            'title' => 'required|string|min:5|max:20',
+            'title' => 'required|string|min:5|max:50',
             'categories' => 'array',
         ];
     }
