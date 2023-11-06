@@ -36,7 +36,11 @@ const body = ref(convertJsonInHtml(props.data['body']));
       </div>
     </div>
 
-    <div class="text-left mt-10 p-2">
+    <div class="flex space-x-1 flex-wrap p-1">
+        <div class="border-sky-500 border-2 rounded-lg w-fit p-1 my-1" v-for="item in props.data['categories']" :key="item.id">{{item.name}}</div>
+    </div>
+
+    <div class="text-left p-2">
       <p class="text-3xl">{{props.data['title']}}</p>
     </div>
 
