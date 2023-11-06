@@ -8,6 +8,7 @@ import {myEditor} from "../helpers/initializationEditorJs.js";
 export const useEditorStore = defineStore('editorStore', () => {
     const title = ref('')
     const body = reactive({})
+    const selectedCategories = ref({});
     const userToken = localStorage.getItem('token');
 
     const router = useRouter();
@@ -20,7 +21,7 @@ export const useEditorStore = defineStore('editorStore', () => {
         axios.post(import.meta.env.VITE_URL_API + '/posts', {
             body: JSON.stringify(body),
             title: title.value,
-            categories: [1,2]
+            categories: selectedCategories.value
         },
     {
         headers: {
@@ -45,5 +46,5 @@ export const useEditorStore = defineStore('editorStore', () => {
         });
     }
 
-    return {myEditor, title, body, save}
+    return {title, body, selectedCategories, save, myEditor}
 })
