@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => rand(1,5),
-            'body' => fake()->text(),
+            'body' => '[{"id":"BQOb-EE5ig","type":"paragraph","data":{"text":"цйуйцуйцуйцу"}}]',
             'title' => fake()->name(),
         ];
     }
