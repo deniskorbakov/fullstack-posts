@@ -19,12 +19,7 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function subscribers(): BelongsToMany {
-        return $this->belongsToMany(Subscriber::class);
+    public function followers(): BelongsToMany {
+        return $this->belongsToMany(Follower::class);
     }
-
-    public function subscriptions(): BelongsToMany {
-        return $this->belongsToMany(Subscription::class);
-    }
-
 }
