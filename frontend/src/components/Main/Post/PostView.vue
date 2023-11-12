@@ -3,6 +3,7 @@ import PostComment from "./PostComment/PostComment.vue";
 import {showDeclensionsComments} from '../../../helpers/showDeclensionsComments.js';
 import {convertJsonInHtml} from "../../../helpers/convertJsonInHtml.js";
 import {ref} from "vue";
+import CommentCreate from "./CommentCreate/CommentCreate.vue";
 
 const props = defineProps({
   data: {
@@ -36,7 +37,11 @@ const body = ref(convertJsonInHtml(props.data['body']));
       </div>
     </div>
 
-    <div class="text-left mt-10 p-2">
+    <div class="flex space-x-1 flex-wrap p-1">
+        <div class="border-sky-500 border-2 rounded-lg w-fit p-1 my-1" v-for="item in props.data['categories']" :key="item.id">{{item.name}}</div>
+    </div>
+
+    <div class="text-left p-2">
       <p class="text-3xl">{{props.data['title']}}</p>
     </div>
 
@@ -73,13 +78,7 @@ const body = ref(convertJsonInHtml(props.data['body']));
         </div>
       </div>
 
-      <div class="mt-5">
-        <textarea class="bg-gray-900 text-white px-4 py-4 rounded-lg w-full h-32 resize-y outline-none" placeholder="Написать комментарий"></textarea>
-      </div>
-
-      <div class="mt-5 text-right">
-        <button class="bg-cyan-500 rounded-lg px-4 py-2 hover:bg-cyan-600">Создать Коммент</button>
-      </div>
+      <CommentCreate :data="props.data"></CommentCreate>
 
       <PostComment v-for="item in props.data['comments']" :data="item"/>
     </div>
