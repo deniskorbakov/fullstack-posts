@@ -1,13 +1,14 @@
 import Home from "../components/Main/Home.vue";
 import Registration from "../components/Main/Registration/Registration.vue";
-import {regGuard} from "../guards/regGuard.js";
 import Auth from "../components/Main/Auth/Auth.vue";
-import {authGuard} from "../guards/authGuard.js";
 import PostCreate from "../components/Main/Post/PostCreate/PostCreate.vue";
-import {postCreateGuard} from "../guards/postCreateGuard.js";
 import PostId from "../components/Main/Post/PostId.vue";
 import Me from "../components/Main/Me/Me.vue";
+import NotFound from "../components/Main/NotFound.vue";
+import {authGuard} from "../guards/authGuard.js";
+import {postCreateGuard} from "../guards/postCreateGuard.js";
 import {meGuard} from "../guards/meGuard.js";
+import {regGuard} from "../guards/regGuard.js";
 
 export const routes = [
     {
@@ -37,6 +38,11 @@ export const routes = [
         path: '/post/:id',
         name: 'postId',
         component: PostId,
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound
     },
     {
         path: '/me',
