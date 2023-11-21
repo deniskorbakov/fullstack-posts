@@ -2,6 +2,7 @@
 
 namespace App\Actions\Followers;
 
+use App\Contracts\Followers\FollowerStoreContract;
 use App\Http\Requests\FollowerRequest;
 use App\Models\Follower;
 use App\Models\User;
@@ -10,9 +11,9 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Application as ApplicationAlias;
 
-class FollowerStore
+class FollowerStore implements FollowerStoreContract
 {
-    public function __invoke(FollowerRequest|array $request): ApplicationAlias|Response|Application|ResponseFactory
+    public function __invoke(array|FollowerRequest $request): ApplicationAlias|Response|Application|ResponseFactory
     {
         $getFollower = Follower::where('follower_id', $request['follower_id'])->where('user_id', auth()->id())->get();
         $getUser = User::find($request['follower_id']);
