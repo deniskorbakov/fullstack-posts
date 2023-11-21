@@ -12,7 +12,7 @@ use App\Contracts\Followers\FollowerShowSubscriptionContract;
 use App\Contracts\Followers\FollowerStoreContract;
 use Illuminate\Support\ServiceProvider;
 
-class ActionServiceProvider extends ServiceProvider
+class ActionFollowerServiceProvider extends ServiceProvider
 {
     public array $binding = [
         FollowerDestroyContract::class => FollowerDestroy::class,
