@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CommentController;
+use App\Http\Controllers\Api\V1\FollowerController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\CommentResponseController;
@@ -13,7 +14,6 @@ use App\Http\Middleware\CheckLikeOwner;
 use App\Http\Middleware\CheckPostOwner;
 use Illuminate\Support\Facades\Route;
 
-//public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -22,9 +22,10 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 Route::get('/categories', [CategoryController::class, 'all']);
 
-//protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserAccountController::class, 'index']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/posts', [PostController::class, 'store']);
     Route::put('/posts/{post}', [PostController::class, 'update'])->middleware(CheckPostOwner::class);
@@ -37,11 +38,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts/{post}/likes', [LikeController::class, 'store']);
     Route::delete('/posts/{post}/likes/{like}', [LikeController::class, 'destroy'])->middleware(CheckLikeOwner::class);
 
-    Route::post('/logout', [AuthController::class, 'logout']);
-
     Route::post('/comments/{comment}/responses', [CommentResponseController::class, 'store']);
     Route::put('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'update'])->middleware(CheckCommentResponseOwner::class);
     Route::delete('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'destroy'])->middleware(CheckCommentResponseOwner::class);
+
+    Route::post('/followers', [FollowerController::class, 'store']);
+    Route::get('/followers/{user}', [FollowerController::class, 'show']);
+    Route::get('/followers/subscriptions/{user}', [FollowerController::class, 'showSubscriptions']);
+    Route::delete('/followers/{follower}', [FollowerController::class, 'destroy']);
 });
 
 
