@@ -2,41 +2,40 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Actions\Followers\FollowerDestroy;
+use App\Actions\Followers\FollowerShow;
+use App\Actions\Followers\FollowerShowSubscription;
+use App\Actions\Followers\FollowerStore;
 use App\Http\Requests\FollowerRequest;
 use App\Http\Resources\FollowerResource;
 use App\Http\Resources\SubscriptionResource;
 use App\Models\User;
-use App\Services\FollowerService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Foundation\Application as ApplicationAlias;
 
 class FollowerController extends Controller
 {
-
-    public function store(FollowerRequest $request, FollowerService $service)
+    public function store(FollowerRequest $request, FollowerStore $action): ApplicationAlias|Response|Application|ResponseFactory
     {
-        $field = $request->validated();
-
-        $follower = $service->store($field);
-
-        return response($follower->original, $follower->status());
+        return $action($request->validated());
     }
 
-    public function show(User $user)
+    public function show(User $user, FollowerShow $action): AnonymousResourceCollection
     {
-        $followers = $user->followers;
-
-        return FollowerResource::collection($followers);
+        return FollowerResource::collection($action($user));
     }
 
-    public function showSubscriptions(User $user)
+    public function showSubscriptions(User $user, FollowerShowSubscription $action): AnonymousResourceCollection
     {
-        $followers = $user->following;
-
-        return SubscriptionResource::collection($followers);
+        return SubscriptionResource::collection($action($user));
     }
 
-    public function destroy(User $follower, FollowerService $service)
+    public function destroy(User $follower, FollowerDestroy $action): ApplicationAlias|Response|Application|ResponseFactory
     {
-        return $service->destroy($follower);
+        return $action($follower);
     }
 
 }
