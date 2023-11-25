@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\Actions;
 
 use App\Actions\Followers\FollowerDestroy;
 use App\Actions\Followers\FollowerShow;

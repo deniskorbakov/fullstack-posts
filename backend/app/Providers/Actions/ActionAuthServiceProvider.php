@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\Actions;
 
 use App\Actions\Auths\AuthLogin;
 use App\Actions\Auths\AuthLogout;
