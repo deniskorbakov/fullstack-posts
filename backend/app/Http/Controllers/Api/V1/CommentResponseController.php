@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CommentResponseController extends Controller
 {
-    public function store(Comment $comment, CommentResponseRequest $request) {
+    public function store(Comment $comment, CommentResponseRequest $request)
+    {
         $fields = $request->validated();
 
         $response = CommentResponse::create([
@@ -22,7 +23,8 @@ class CommentResponseController extends Controller
         return new CommentResponseResource($response);
     }
 
-    public function update(Comment $comment, CommentResponse $response, CommentResponseRequest $request) {
+    public function update(CommentResponse $response, CommentResponseRequest $request)
+    {
         $fields = $request->validated();
 
         $response->update([
@@ -32,7 +34,8 @@ class CommentResponseController extends Controller
         return new CommentResponseResource($response);
     }
 
-    public function destroy(Comment $comment, CommentResponse $response) {
+    public function destroy(CommentResponse $response)
+    {
 
         $response->delete();
 
