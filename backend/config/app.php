@@ -165,11 +165,11 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ActionFollowerServiceProvider::class,
-        App\Providers\ActionAuthServiceProvider::class,
+        App\Providers\Actions\ActionFollowerServiceProvider::class,
+        App\Providers\Actions\ActionAuthServiceProvider::class,
+        App\Providers\Actions\ActionCommentServiceProvider::class,
     ])->toArray(),
 
     /*
