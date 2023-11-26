@@ -10,14 +10,12 @@ use App\Models\Post;
 
 class CommentStore implements CommentStoreContract
 {
-    public function __invoke(CommentRequest $request, Post $post): CommentResource
+    public function __invoke(array|CommentRequest $request, Post $post): CommentResource
     {
-        $fields = $request->validated();
-
         $comment = Comment::create([
             'post_id' => $post->id,
             'user_id' => auth()->user()->getAuthIdentifier(),
-            'text' => $fields['text'],
+            'text' => $request['text'],
         ]);
 
         return new CommentResource($comment);
