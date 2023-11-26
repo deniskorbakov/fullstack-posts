@@ -16,18 +16,18 @@ use Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
-    public function store(CommentRequest $request, Post $post, CommentStore $action): CommentResource
+    public function store(Post $post, CommentRequest $request, CommentStore $action): CommentResource
     {
-        return $action($request, $post);
+        return $action($request->validated(), $post);
     }
 
-    public function update(Comment $comment, CommentRequest $request, CommentUpdate $action): CommentResource
+    public function update(Post $post, Comment $comment, CommentRequest $request, CommentUpdate $action): CommentResource|ApplicationAlias|Response|Application|ResponseFactory
     {
-        return  $action($comment, $request);
+        return $action($comment, $request->validated(), $post);
     }
 
-    public function destroy(Comment $comment, CommentDestroy $action): ApplicationAlias|Response|Application|ResponseFactory
+    public function destroy(Post $post, Comment $comment, CommentDestroy $action): ApplicationAlias|Response|Application|ResponseFactory
     {
-        return $action($comment);
+        return $action($comment, $post);
     }
 }
