@@ -2,44 +2,29 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Actions\CommentsResponses\CommentResponseDestroy;
+use App\Actions\CommentsResponses\CommentResponseStore;
+use App\Actions\CommentsResponses\CommentResponseUpdate;
 use App\Http\Requests\CommentResponseRequest;
 use App\Http\Resources\CommentResponseResource;
 use App\Models\Comment;
 use App\Models\CommentResponse;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Illuminate\Http\JsonResponse;
 
 class CommentResponseController extends Controller
 {
-    public function store(Comment $comment, CommentResponseRequest $request)
+    public function store(Comment $comment, CommentResponseRequest $request, CommentResponseStore $action): CommentResponseResource
     {
-        $fields = $request->validated();
-
-        $response = CommentResponse::create([
-            'comment_id' => $comment->id,
-            'user_id' => auth()->user()->getAuthIdentifier(),
-            'text' => $fields['text'],
-        ]);
-
-        return new CommentResponseResource($response);
+        return $action($request, $comment);
     }
 
-    public function update(CommentResponse $response, CommentResponseRequest $request)
+    public function update(Comment $comment, CommentResponse $response, CommentResponseRequest $request, CommentResponseUpdate $action): CommentResponseResource|JsonResponse
     {
-        $fields = $request->validated();
-
-        $response->update([
-            'text' => $fields['text'],
-        ]);
-
-        return new CommentResponseResource($response);
+        return $action($request, $response, $comment);
     }
 
-    public function destroy(CommentResponse $response)
+    public function destroy(Comment $comment, CommentResponse $response, CommentResponseDestroy $action): JsonResponse
     {
-
-        $response->delete();
-
-        return response(null, ResponseAlias::HTTP_NO_CONTENT);
-
+        return $action($response, $comment);
     }
 }
