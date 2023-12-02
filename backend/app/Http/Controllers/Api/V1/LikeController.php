@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Actions\Likes\LikeDestroy;
+use App\Actions\Likes\LikeStore;
 use App\Models\Like;
 use App\Models\Post;
-use App\Services\LikeService;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Illuminate\Http\JsonResponse;
 
 class LikeController extends Controller
 {
-    public function store(Post $post, LikeService $service)
+    public function store(Post $post, LikeStore $action): JsonResponse
     {
-        $response = $service->store($post);
-
-        return response($response->original, $response->status());
+        return $action($post);
     }
 
-    public function destroy(Like $like)
+    public function destroy(Like $like, LikeDestroy $action): JsonResponse
     {
-        $like->delete();
-
-        return response(null, ResponseAlias::HTTP_NO_CONTENT);
+       return $action($like);
     }
 }
