@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Relations\Post\BelongsTo\UserRelation;
+use App\Models\Relations\Post\BelongsToMany\CategoriesRelation;
+use App\Models\Relations\Post\HasMany\CommentsRelation;
+use App\Models\Relations\Post\HasMany\LikesRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -13,26 +16,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Post extends Model
 {
-    protected $table = 'posts';
-    protected $guarded = ['id'];
-
     use HasFactory, SoftDeletes;
 
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class, 'post_categories', 'post_id', 'category_id');
-    }
+    // Belong To Many Relation
+    use CategoriesRelation;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // Belong To Relation
+    use UserRelation;
 
-    public function likes() {
-        return $this->hasMany(Like::class);
-    }
+    // Has Many Relation
+    use LikesRelation, CommentsRelation;
 
-    public function comments() {
-        return $this->hasMany(Comment::class);
-    }
+    protected $fillable = [
+        'user_id',
+        'title',
+        'body',
+    ];
 }
