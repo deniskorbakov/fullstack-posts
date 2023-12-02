@@ -174,6 +174,7 @@ return [
         App\Providers\Actions\ActionLikeServiceProvider::class,
         App\Providers\Actions\ActionPostServiceProvider::class,
         App\Providers\Actions\ActionUserAccountServiceProvider::class,
+        App\Providers\Actions\ActionCategoryServiceProvider::class,
     ])->toArray(),
 
     /*
