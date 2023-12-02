@@ -171,6 +171,7 @@ return [
         App\Providers\Actions\ActionAuthServiceProvider::class,
         App\Providers\Actions\ActionCommentServiceProvider::class,
         App\Providers\Actions\ActionCommentResponseServiceProvider::class,
+        App\Providers\Actions\ActionLikeServiceProvider::class,
     ])->toArray(),
 
     /*
