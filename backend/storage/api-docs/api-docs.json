@@ -586,6 +586,208 @@
                 ]
             }
         },
+        "/api/v1/followers": {
+            "post": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "Подписаться на пользователя",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "follower_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Вы успешно подписались на Clement Legros"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/followers/{user}": {
+            "get": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "Получить список подписок пользователя",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "follower_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "follower_name": {
+                                                        "type": "string",
+                                                        "example": "Gracie Sauer Sr."
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/followers/subscriptions/{user}": {
+            "get": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "Получить список подписчиков пользователя",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "subscription_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "subscription_name": {
+                                                        "type": "string",
+                                                        "example": "Gracie Sauer Sr."
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/followers/{follower}": {
+            "delete": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "Отписка от пользователя",
+                "parameters": [
+                    {
+                        "name": "follower",
+                        "in": "path",
+                        "description": "Id подписки",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Вы успешно отписались от пользователя"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/posts/{post}/likes": {
             "post": {
                 "tags": [
@@ -1162,6 +1364,57 @@
                 "responses": {
                     "204": {
                         "description": "none content"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Данные профиля",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "username"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "test@gmail.com"
+                                                    },
+                                                    "posts": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "createdAccount": {
+                                                        "type": "string",
+                                                        "example": "2023-11-21 10:06:54"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
