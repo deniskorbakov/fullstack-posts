@@ -25,12 +25,12 @@ class FollowerController extends Controller
 
     public function show(User $user, FollowerShow $action): AnonymousResourceCollection
     {
-        return FollowerResource::collection($action($user));
+        return $action($user);
     }
 
     public function showSubscriptions(User $user, FollowerShowSubscription $action): AnonymousResourceCollection
     {
-        return SubscriptionResource::collection($action($user));
+        return $action($user);
     }
 
     public function destroy(User $follower, FollowerDestroy $action): ApplicationAlias|Response|Application|ResponseFactory
