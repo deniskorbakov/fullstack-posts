@@ -170,6 +170,7 @@ return [
         App\Providers\Actions\ActionFollowerServiceProvider::class,
         App\Providers\Actions\ActionAuthServiceProvider::class,
         App\Providers\Actions\ActionCommentServiceProvider::class,
+        App\Providers\Actions\ActionCommentResponseServiceProvider::class,
     ])->toArray(),
 
     /*
