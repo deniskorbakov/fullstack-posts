@@ -1372,6 +1372,57 @@
                     }
                 ]
             }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Данные профиля",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "username"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "test@gmail.com"
+                                                    },
+                                                    "posts": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "createdAccount": {
+                                                        "type": "string",
+                                                        "example": "2023-11-21 10:06:54"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

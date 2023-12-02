@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Services;
+namespace App\Actions\Posts;
 
+use App\Contracts\Posts\PostStoreContract;
+use App\Http\Requests\PostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
 
-class PostService
+class PostStore implements PostStoreContract
 {
-    public function store($fields) {
+    public function __invoke(PostRequest $request): PostResource
+    {
+        $fields = $request->validated();
+
         $post = Post::create([
             'user_id' => auth()->user()->getAuthIdentifier(),
             'body' => $fields['body'],
@@ -20,20 +26,6 @@ class PostService
             $category->posts()->save($post);
         }
 
-        return $post;
-    }
-
-    public function update($fields, $post) {
-        $categories = Category::whereIn('id', $fields['categories'])->get();
-
-        $post->update([
-            'body' => $fields['body'],
-            'title' => $fields['title'],
-        ]);
-
-
-        $post->categories()->sync($categories);
-
-        return $post;
+        return new PostResource($post);
     }
 }

@@ -165,10 +165,16 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ActionServiceProvider::class,
+        App\Providers\Actions\ActionFollowerServiceProvider::class,
+        App\Providers\Actions\ActionAuthServiceProvider::class,
+        App\Providers\Actions\ActionCommentServiceProvider::class,
+        App\Providers\Actions\ActionCommentResponseServiceProvider::class,
+        App\Providers\Actions\ActionLikeServiceProvider::class,
+        App\Providers\Actions\ActionPostServiceProvider::class,
+        App\Providers\Actions\ActionUserAccountServiceProvider::class,
+        App\Providers\Actions\ActionCategoryServiceProvider::class,
     ])->toArray(),
 
     /*

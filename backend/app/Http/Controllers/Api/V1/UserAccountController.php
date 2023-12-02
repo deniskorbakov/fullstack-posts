@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Api\V1\Controller;
-use App\Http\Resources\UserAccountResource;
-use App\Models\User;
+use App\Actions\UsersAccounts\UserAccountIndex;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserAccountController extends Controller
 {
-    public function index() {
-
-        return new UserAccountResource(User::findOrFail(auth()->id()));
+    public function index(UserAccountIndex $action): JsonResource
+    {
+        return $action();
     }
 }
