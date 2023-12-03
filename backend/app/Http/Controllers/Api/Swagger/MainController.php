@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Swagger;
+namespace App\Http\Controllers\Api\Swagger;
 
 use App\Http\Controllers\Api\V1\Controller;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Info(
@@ -23,7 +22,4 @@ use Illuminate\Http\Request;
  *     ),
  * ),
  */
-class MainController extends Controller
-{
-    //
-}
+class MainController extends Controller {}

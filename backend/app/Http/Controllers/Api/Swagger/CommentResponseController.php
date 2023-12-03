@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Swagger;
+namespace App\Http\Controllers\Api\Swagger;
 
 use App\Http\Controllers\Api\V1\Controller;
 
 /**
  *
  * @OA\Post(
- *    path="/api/v1/posts/{post}/comments",
+ *    path="/api/v1/comments/{comment}/responses",
  *    summary="Создать запись",
- *    tags={"Comment"},
+ *    tags={"CommentResponse"},
  *    security={{ "bearerAuth": {} }},
  *    @OA\Parameter(
- *        description="Id поста",
+ *        description="Id комментария",
  *        in="path",
- *        name="post",
+ *        name="comment",
  *        required=true,
  *        example=1,
  *    ),
@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\V1\Controller;
  *        @OA\JsonContent(
  *            allOf={
  *                @OA\Schema(
- *                    @OA\Property(property="text", type="string", example="text for post min 15 chars"),
+ *                    @OA\Property(property="text", type="string", example="text for response comment"),
  *                )
  *            }
  *        )
@@ -36,31 +36,30 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="userName", type="string", example="your name"),
- *                @OA\Property(property="comment", type="string", example="text for post min 15 chars"),
- *                @OA\Property(property="response", type="array", @OA\Items(type="object"), example={}),
+ *                @OA\Property(property="comment", type="string", example="text for response comment"),
  *            ),
  *        ),
  *    ),
  *  ),
  *
  * @OA\Put(
- *    path="/api/v1/posts/{post}/comments/{comment}",
+ *    path="/api/v1/comments/{comment}/responses/{response}",
  *    summary="Обновить запись",
- *    tags={"Comment"},
+ *    tags={"CommentResponse"},
  *    security={{ "bearerAuth": {} }},
  *
  *    @OA\Parameter(
- *        description="Id поста",
+ *        description="Id комментария",
  *        in="path",
- *        name="post",
+ *        name="comment",
  *        required=true,
  *        example=1,
  *    ),
  *
  *    @OA\Parameter(
- *        description="Id коментария",
+ *        description="Id ответа на комментарий",
  *        in="path",
- *        name="comment",
+ *        name="response",
  *        required=true,
  *        example=44,
  *    ),
@@ -69,7 +68,7 @@ use App\Http\Controllers\Api\V1\Controller;
  *        @OA\JsonContent(
  *            allOf={
  *                @OA\Schema(
- *                    @OA\Property(property="text", type="string", example="update text for your comment - min 15 chars"),
+ *                    @OA\Property(property="text", type="string", example="update text for response comment"),
  *                )
  *            }
  *         ),
@@ -82,31 +81,30 @@ use App\Http\Controllers\Api\V1\Controller;
  *            @OA\Property(property="data", type="object",
  *                @OA\Property(property="id", type="integer", example=1),
  *                @OA\Property(property="userName", type="string", example="your name"),
- *                @OA\Property(property="comment", type="string", example="update text for your comment - min 15 chars"),
- *                @OA\Property(property="response", type="array", @OA\Items(type="object"), example={}),
+ *                @OA\Property(property="comment", type="string", example="update text for response comment"),
  *            ),
  *        ),
  *    ),
  *  ),
  *
  * @OA\Delete(
- *    path="/api/v1/posts/{post}/comments/{comment}",
+ *    path="/api/v1/comments/{comment}/responses/{response}",
  *    summary="Удаление",
- *    tags={"Comment"},
+ *    tags={"CommentResponse"},
  *    security={{ "bearerAuth": {} }},
  *
  *    @OA\Parameter(
- *        description="Id поста",
+ *        description="Id комментария",
  *        in="path",
- *        name="post",
+ *        name="comment",
  *        required=true,
  *        example=1,
  *    ),
  *
  *    @OA\Parameter(
- *        description="Id коментария",
+ *        description="Id ответа на комментарий",
  *        in="path",
- *        name="comment",
+ *        name="response",
  *        required=true,
  *        example=44,
  *    ),
@@ -119,8 +117,4 @@ use App\Http\Controllers\Api\V1\Controller;
  *
  **/
 
-class CommentController extends Controller
-{
-
-
-}
+class CommentResponseController extends Controller {}

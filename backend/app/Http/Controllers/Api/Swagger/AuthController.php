@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Swagger;
+namespace App\Http\Controllers\Api\Swagger;
 
 use App\Http\Controllers\Api\V1\Controller;
 
@@ -89,8 +89,4 @@ use App\Http\Controllers\Api\V1\Controller;
  *
  **/
 
-class AuthController extends Controller
-{
-
-
-}
+class AuthController extends Controller {}

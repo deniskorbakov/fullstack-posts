@@ -1,51 +1,63 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AuthController;
-use App\Http\Controllers\Api\V1\CategoryController;
-use App\Http\Controllers\Api\V1\CommentController;
-use App\Http\Controllers\Api\V1\FollowerController;
-use App\Http\Controllers\Api\V1\LikeController;
-use App\Http\Controllers\Api\V1\PostController;
-use App\Http\Controllers\Api\V1\CommentResponseController;
-use App\Http\Controllers\Api\V1\UserAccountController;
-use App\Http\Middleware\CheckCommentOwner;
 use App\Http\Middleware\CheckCommentResponseOwner;
+use App\Http\Middleware\CheckCommentOwner;
 use App\Http\Middleware\CheckLikeOwner;
 use App\Http\Middleware\CheckPostOwner;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::namespace('App\Http\Controllers\Api\V1\Post')->group(function () {
+    Route::get('/posts', 'IndexController');
+    Route::get('/posts/{post}', 'ShowController');
+});
 
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::namespace('App\Http\Controllers\Api\V1\Auth')->group(function () {
+    Route::post('/register', 'RegisterController');
+    Route::post('/login', 'LoginController');
+});
 
-Route::get('/categories', [CategoryController::class, 'all']);
+Route::namespace('App\Http\Controllers\Api\V1\Category')->group(function () {
+    Route::get('/categories', 'IndexController');
+});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/user', [UserAccountController::class, 'index']);
+    Route::namespace('App\Http\Controllers\Api\V1\Follower')->group(function () {
+        Route::post('/followers', 'StoreController');
+        Route::get('/followers/{user}', 'ShowController');
+        Route::get('/followers/subscriptions/{user}', 'ShowSubscriptionsController');
+        Route::delete('/followers/{follower}', 'DestroyController');
+    });
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::namespace('App\Http\Controllers\Api\V1\Comment')->group(function () {
+        Route::post('/posts/{post}/comments', 'StoreController');
+        Route::put('/posts/{post}/comments/{comment}', 'UpdateController')->middleware(CheckCommentOwner::class);
+        Route::delete('/posts/{post}/comments/{comment}', 'DestroyController')->middleware(CheckCommentOwner::class);
+    });
 
-    Route::post('/posts', [PostController::class, 'store']);
-    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware(CheckPostOwner::class);
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware(CheckPostOwner::class);
+    Route::namespace('App\Http\Controllers\Api\V1\CommentResponse')->group(function () {
+        Route::post('/comments/{comment}/responses', 'StoreController');
+        Route::put('/comments/{comment}/responses/{response}', 'UpdateController')->middleware(CheckCommentResponseOwner::class);
+        Route::delete('/comments/{comment}/responses/{response}', 'DestroyController')->middleware(CheckCommentResponseOwner::class);
+    });
 
-    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
-    Route::put('/posts/{post}/comments/{comment}', [CommentController::class, 'update'])->middleware(CheckCommentOwner::class);
-    Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->middleware(CheckCommentOwner::class);
+    Route::namespace('App\Http\Controllers\Api\V1\Post')->group(function () {
+        Route::post('/posts', 'StoreController');
+        Route::put('/posts/{post}', 'UpdateController')->middleware(CheckPostOwner::class);
+        Route::delete('/posts/{post}', 'DestroyController')->middleware(CheckPostOwner::class);
+    });
 
-    Route::post('/posts/{post}/likes', [LikeController::class, 'store']);
-    Route::delete('/posts/{post}/likes/{like}', [LikeController::class, 'destroy'])->middleware(CheckLikeOwner::class);
+    Route::namespace('App\Http\Controllers\Api\V1\Like')->group(function () {
+        Route::post('/posts/{post}/likes', 'StoreController');
+        Route::delete('/posts/{post}/likes/{like}', 'DestroyController')->middleware(CheckLikeOwner::class);
+    });
 
-    Route::post('/comments/{comment}/responses', [CommentResponseController::class, 'store']);
-    Route::put('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'update'])->middleware(CheckCommentResponseOwner::class);
-    Route::delete('/comments/{comment}/responses/{response}', [CommentResponseController::class, 'destroy'])->middleware(CheckCommentResponseOwner::class);
+    Route::namespace('App\Http\Controllers\Api\V1\UserAccount')->group(function () {
+        Route::get('/user', 'IndexController');
+    });
 
-    Route::post('/followers', [FollowerController::class, 'store']);
-    Route::get('/followers/{user}', [FollowerController::class, 'show']);
-    Route::get('/followers/subscriptions/{user}', [FollowerController::class, 'showSubscriptions']);
-    Route::delete('/followers/{follower}', [FollowerController::class, 'destroy']);
+    Route::namespace('App\Http\Controllers\Api\V1\Auth')->group(function () {
+        Route::post('/logout', 'LogoutController');
+    });
 });
 
 
