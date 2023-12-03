@@ -28,3 +28,4 @@ ___
 ___
 
 ### Swagger - [перейти](http://localhost:8876/api/doc)
+### Telescope - [перейти](http://localhost:8876/telescope/requests)
