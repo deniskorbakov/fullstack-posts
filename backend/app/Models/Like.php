@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\Like\CurrentLike;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Relations\Like\BelongsTo\UserRelation;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
 
@@ -19,6 +21,8 @@ use DateTime;
  * @property DateTime|null $updated_at
  *
  * @property Collection<User> $user
+ *
+ * @method static Builder currentLike(int $postId)
  */
 class Like extends Model
 {
@@ -26,6 +30,9 @@ class Like extends Model
 
     // Belong To Relation
     use UserRelation;
+
+    // Scope
+    use CurrentLike;
 
     protected $fillable = [
         'user_id',

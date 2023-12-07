@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\Relations\Follower\BelongsTo\FollowerRelation;
 use App\Models\Relations\Follower\BelongsTo\UserRelation;
+use App\Models\Scopes\Follower\CurrentFollower;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @property int $id
@@ -19,13 +21,18 @@ use DateTime;
  *
  * @property Collection<User> $follower
  * @property Collection<User> $user
+ *
+ * @method static Builder currentFollower(int $followerId)
  */
 class Follower extends Model
 {
     use HasFactory;
 
-    //Belong To Relation
+    // Belong To Relation
     use FollowerRelation, UserRelation;
+
+    // Scope
+    use CurrentFollower;
 
     protected $fillable = [
         'user_id',
