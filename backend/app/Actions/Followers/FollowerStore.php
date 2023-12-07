@@ -15,10 +15,9 @@ class FollowerStore implements FollowerStoreContract
 {
     public function __invoke(array|FollowerRequest $request): ApplicationAlias|Response|Application|ResponseFactory
     {
-        $getFollower = Follower::where('follower_id', $request['follower_id'])->where('user_id', auth()->id())->get();
         $getUser = User::find($request['follower_id']);
 
-        $countFollowersOnUser = count($getFollower);
+        $countFollowersOnUser = Follower::currentFollower($request['follower_id'])->count();
 
         if(0 !== $countFollowersOnUser) {
             return response(['message' => 'Нельзя подписаться больше 1 раза'], 403);

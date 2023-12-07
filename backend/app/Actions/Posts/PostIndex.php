@@ -12,10 +12,6 @@ class PostIndex implements PostIndexContract
 {
     public function __invoke(Request $request): AnonymousResourceCollection
     {
-        $page = ($request->page ?? 1) * 10;
-
-        $skip = $page - 10;
-
-        return PostResource::collection(Post::orderBy('id', 'desc')->skip($skip)->paginate(10));
+        return PostResource::collection(Post::paginate($request->page));
     }
 }

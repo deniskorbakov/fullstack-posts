@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Relations\Post\BelongsToMany\CategoriesRelation;
 use App\Models\Relations\Post\HasMany\CommentsRelation;
+use App\Models\Scopes\Post\Paginate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Relations\Post\BelongsTo\UserRelation;
 use App\Models\Relations\Post\HasMany\LikesRelation;
@@ -26,6 +27,8 @@ use DateTime;
  * @property Collection<User> $user
  * @property Collection<Like> $likes
  * @property Collection<Comment> $comments
+ *
+ * @method static Paginate(int|null $pages)
  */
 class Post extends Model
 {
@@ -39,6 +42,9 @@ class Post extends Model
 
     // Has Many Relation
     use LikesRelation, CommentsRelation;
+
+    //Scope
+    use Paginate;
 
     protected $fillable = [
         'user_id',

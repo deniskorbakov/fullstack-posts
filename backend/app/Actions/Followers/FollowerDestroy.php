@@ -14,7 +14,7 @@ class FollowerDestroy implements FollowerDestroyContract
 {
     public function __invoke(User $follower): ApplicationAlias|Response|Application|ResponseFactory
     {
-        $currencyFollowerField = Follower::where('user_id', auth()->id())->where('follower_id', $follower->id)->first();
+        $currencyFollowerField = Follower::currentFollower($follower->id)->first();
 
         if(null == $currencyFollowerField) {
             return response(['message' => 'Вы не подписаны на данного пользователя'], 403);
