@@ -3,25 +3,22 @@
 namespace App\Actions\Followers;
 
 use App\Contracts\Followers\FollowerDestroyContract;
+use Illuminate\Http\JsonResponse;
 use App\Models\Follower;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application as ApplicationAlias;
-use Illuminate\Http\Response;
 
 class FollowerDestroy implements FollowerDestroyContract
 {
-    public function __invoke(User $follower): ApplicationAlias|Response|Application|ResponseFactory
+    public function __invoke(User $follower): JsonResponse
     {
         $currencyFollowerField = Follower::currentFollower($follower->id)->first();
 
         if(null == $currencyFollowerField) {
-            return response(['message' => 'Вы не подписаны на данного пользователя'], 403);
+            return response()->json(['message' => 'Вы не подписаны на данного пользователя'], 403);
         }
 
         $currencyFollowerField->delete();
 
-        return response(['message' => 'Вы успешно отписались'], 200);
+        return response()->json(['message' => 'Вы успешно отписались'], 200);
     }
 }

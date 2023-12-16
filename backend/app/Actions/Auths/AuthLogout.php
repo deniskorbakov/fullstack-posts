@@ -3,17 +3,14 @@
 namespace App\Actions\Auths;
 
 use App\Contracts\Auths\AuthLogoutContract;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application as ApplicationAlias;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class AuthLogout implements AuthLogoutContract
 {
-    public function __invoke($user): ApplicationAlias|Response|Application|ResponseFactory
+    public function __invoke($user): JsonResponse
     {
         $user->tokens()->delete();
 
-        return response(['data' => ['message' => 'you logout']], 200);
+        return response()->json(['data' => ['message' => 'you logout']]);
     }
 }

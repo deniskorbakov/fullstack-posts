@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Actions\Auths\AuthRegister;
 use App\Http\Requests\AuthRegisterRequest;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application as ApplicationAlias;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController
 {
-    public function __invoke(AuthRegisterRequest $request, AuthRegister $action): ApplicationAlias|Response|Application|ResponseFactory
+    public function __invoke(AuthRegisterRequest $request, AuthRegister $action): JsonResponse
     {
         return $action($request->validated());
     }
