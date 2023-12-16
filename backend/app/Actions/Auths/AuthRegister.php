@@ -4,15 +4,12 @@ namespace App\Actions\Auths;
 
 use App\Contracts\Auths\AuthRegisterContract;
 use App\Http\Requests\AuthRegisterRequest;
+use Illuminate\Http\JsonResponse;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application as ApplicationAlias;
-use Illuminate\Http\Response;
 
 class AuthRegister implements AuthRegisterContract
 {
-     public function __invoke(array|AuthRegisterRequest $request): ApplicationAlias|Response|Application|ResponseFactory
+     public function __invoke(array|AuthRegisterRequest $request): JsonResponse
      {
          $user = User::create([
              'name' => $request['name'],
@@ -26,6 +23,6 @@ class AuthRegister implements AuthRegisterContract
              'token' => $token,
          ];
 
-         return response($response, 201);
+         return response()->json($response, 201);
      }
 }
