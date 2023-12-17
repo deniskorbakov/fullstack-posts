@@ -2,30 +2,39 @@
 
 namespace App\Models;
 
+use App\Models\Relations\Comment\HasMany\ResponsesRelation;
+use App\Models\Relations\Comment\BelongsTo\UserRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use DateTime;
 
 /**
- * @property mixed $id
+ * @property int $id
+ * @property int $user_id
+ * @property int $post_id
+ * @property string $text
+ * @property DateTime|null $deleted_at
+ * @property DateTime|null $created_at
+ * @property DateTime|null $updated_at
+ *
+ * @property Collection<User> $user
+ * @property Collection<CommentResponse> $responses
  */
 class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'comments';
+    // Belongs To Relation
+    use UserRelation;
 
-    protected $guarded = ['id'];
+    // Has Many Relations
+    use ResponsesRelation;
 
-    public function users(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function responses(): HasMany
-    {
-        return $this->hasMany(CommentResponse::class);
-    }
+    protected $fillable = [
+        'user_id',
+        'post_id',
+        'text',
+    ];
 }

@@ -11,7 +11,7 @@ class LikeStore implements LikeStoreContract
 {
     public function __invoke(Post $post): JsonResponse
     {
-        $like = Like::where('user_id', auth()->id())->where('post_id', $post->id)->first();
+        $like = Like::currentLike($post->id)->first();
 
         if(!$like) {
             Like::create([

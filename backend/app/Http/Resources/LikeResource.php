@@ -22,7 +22,7 @@ class LikeResource extends JsonResource
     {
         return [
             'id' => $this->like->id,
-            'userName' => $this->like->users()->value('name'),
+            'userName' => $this->like->user()->value('name'),
         ];
     }
 }

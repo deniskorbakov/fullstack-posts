@@ -2,17 +2,30 @@
 
 namespace App\Models;
 
+use App\Models\Relations\Category\BelongsToMany\Posts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use DateTime;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property DateTime|null $deleted_at
+ * @property DateTime|null $created_at
+ * @property DateTime|null $updated_at
+ *
+ * @property Collection<Post> $posts
+ */
 class Category extends Model
 {
     use HasFactory;
 
-    public function posts(): BelongsToMany
-    {
-        return $this->belongsToMany(Post::class, 'post_categories', 'category_id', 'post_id');
-    }
+    // Belongs To Many Relations
+    use Posts;
+
+    protected $fillable = [
+        'name',
+    ];
 }
 

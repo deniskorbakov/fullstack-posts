@@ -2,35 +2,38 @@
 
 namespace App\Models;
 
+use App\Models\Relations\User\HasMany\FollowersRelation;
+use App\Models\Relations\User\HasMany\FollowingRelation;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Relations\User\HasMany\PostsRelation;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use DateTime;
 
 /**
- * @property Collection $followers
- * @property Collection $following
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property DateTime|null $created_at
+ * @property DateTime|null $updated_at
+ *
+ * @property Collection<Follower> $followers
+ * @property Collection<Follower> $following
+ * @property Collection<Post> $posts
  */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guarded = ['id'];
+    // Has Many Relation
+    use PostsRelation, FollowingRelation, FollowersRelation;
 
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    public function followers(): hasMany
-    {
-        return $this->hasMany(Follower::class, 'user_id');
-    }
-
-    public function following(): HasMany
-    {
-        return $this->hasMany(Follower::class, 'follower_id');
-    }
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 }

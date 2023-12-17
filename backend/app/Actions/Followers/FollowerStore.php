@@ -4,28 +4,24 @@ namespace App\Actions\Followers;
 
 use App\Contracts\Followers\FollowerStoreContract;
 use App\Http\Requests\FollowerRequest;
+use Illuminate\Http\JsonResponse;
 use App\Models\Follower;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
-use Illuminate\Foundation\Application as ApplicationAlias;
 
 class FollowerStore implements FollowerStoreContract
 {
-    public function __invoke(array|FollowerRequest $request): ApplicationAlias|Response|Application|ResponseFactory
+    public function __invoke(array|FollowerRequest $request): JsonResponse
     {
-        $getFollower = Follower::where('follower_id', $request['follower_id'])->where('user_id', auth()->id())->get();
         $getUser = User::find($request['follower_id']);
 
-        $countFollowersOnUser = count($getFollower);
+        $countFollowersOnUser = Follower::currentFollower($request['follower_id'])->count();
 
         if(0 !== $countFollowersOnUser) {
-            return response(['message' => 'Нельзя подписаться больше 1 раза'], 403);
+            return response()->json(['message' => 'Нельзя подписаться больше 1 раза'], 403);
         } else if(null === $getUser) {
-            return response(['message' => 'Такого пользователя не существует'], 403);
+            return response()->json(['message' => 'Такого пользователя не существует'], 403);
         } else if(auth()->id() == $request['follower_id']) {
-            return response(['message' => 'Вы не можете подписаться сами на себя'], 403);
+            return response()->json(['message' => 'Вы не можете подписаться сами на себя'], 403);
         }
 
         Follower::create([
@@ -33,6 +29,6 @@ class FollowerStore implements FollowerStoreContract
             'follower_id' => $request['follower_id'],
         ]);
 
-        return response(['message' => 'Вы успешно подписались на ' . $getUser->name], 201);
+        return response()->json(['message' => 'Вы успешно подписались на ' . $getUser->name], 201);
     }
 }
