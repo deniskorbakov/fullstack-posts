@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CheckCommentResponseOwner;
 use App\Http\Middleware\CheckCommentOwner;
+use App\Http\Middleware\LogRequestData;
 use App\Http\Middleware\CheckLikeOwner;
 use App\Http\Middleware\CheckPostOwner;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ Route::namespace('App\Http\Controllers\Api\V1\Post')->group(function () {
 
 Route::namespace('App\Http\Controllers\Api\V1\Auth')->group(function () {
     Route::post('/register', 'RegisterController');
-    Route::post('/login', 'LoginController');
+    Route::post('/login', 'LoginController')->middleware(LogRequestData::class);
 });
 
 Route::namespace('App\Http\Controllers\Api\V1\Category')->group(function () {
