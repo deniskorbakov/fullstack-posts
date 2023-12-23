@@ -29,3 +29,4 @@ ___
 
 ### Swagger - [перейти](http://localhost:8876/api/doc)
 ### Telescope - [перейти](http://localhost:8876/telescope/requests)
+### Figma - [перейти](https://www.figma.com/file/D7hVnHZZizMUcNQNEUuK2H/your-posts?type=design&node-id=0-1&mode=design&t=OeTGyvS6TC0Sa5r3-0)
