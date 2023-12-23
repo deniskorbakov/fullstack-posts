@@ -35,7 +35,8 @@ export const useLoginStore = defineStore('loginStore', () => {
         if (result) {
             axios.post(import.meta.env.VITE_URL_API + '/login', {
                 headers: {
-                    'Accept' : 'application/json',
+                    'Accept': 'application/json',
+                    'User-Agent': window.navigator.userAgent,
                 },
 
                 email: formData.email,
@@ -47,8 +48,10 @@ export const useLoginStore = defineStore('loginStore', () => {
                     localStorage.setItem('token', auth.value.token)
                     isAuth();
                     router.push({name: 'me'})
+                    console.log(response);
                 })
                 .catch(error => {
+
                     errorAuth.value = error.response.data
                 });
         }
