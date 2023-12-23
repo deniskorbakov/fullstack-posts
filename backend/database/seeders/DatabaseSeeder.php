@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
 use App\Models\CommentResponse;
+use Illuminate\Database\Seeder;
+use App\Models\LoginInfo;
+use App\Models\Category;
 use App\Models\Follower;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         Comment::factory(40)->create();
         CommentResponse::factory(20)->create();
         Follower::factory(5)->create();
+        LoginInfo::factory(10)->create();
     }
 }
